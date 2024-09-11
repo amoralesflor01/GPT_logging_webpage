@@ -181,6 +181,18 @@ def save_user_session_data():
         except Exception as e:
             print(f"Failed to create JSON file: {e}")
 
+# Function that will end the session for the user, either button was pressed or 
+# time is over.
+@application.route("/end-session", methods=['POST'])
+def end_session():
+    # Save session data and clean up
+    save_user_session_data()
+    
+    # Clear the session
+    session.clear()
+
+    return 'Session Ended', 200
+
 # Register the save_user_session_data function to be called when the program exits
 atexit.register(save_user_session_data)
 

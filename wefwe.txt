@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+
+
+
+<body>
+<div class="container" style="border: 1px solid black; border-radius: 10px; padding: 10px; background-color: #4e919c; margin: auto;">
+    <p style="font-family: Arial; color: white;font-size: 15px">
+	  This Chatbot will be used for a research study, the prompts entered will be recorded and analyzed. Do not enter any information you wish to keep private.
+    </p>
+</div>
+<div class="chat_window">
+
+    <div class="top_menu">
+        <div class="title">Hi, Your User Id is: {{userId}}</div>
+    </div>
+    <ul class="messages"></ul>
+    <div class="bottom_wrapper clearfix">
+        <div class="message_input_wrapper">
+            <input class="message_input" placeholder="Type your message here..." />
+        </div>
+
+        <div class="send_message">
+            <div class="icon">
+                <img src="{{ url_for('static', filename='images/logos/send_icon.svg') }}" alt="Send Icon">
+            </div>
+            <div class="text"><b><strong>Send</strong></b></div>
+        </div>
+        <!--
+        <button id="refreshBtn" class="btn btn-primary form-control" onclick="location.reload()">Refresh</button>
+        -->
+    </div>
+    <div class="message_template">
+    <li class="message">
+        <div class="avatar"></div>
+        <div class="text_wrapper">
+            <div class="text"></div>
+        </div>
+    </li>
+</div>
+
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- To pass a variable in external JS -->
+<div id="userInfo" data-userid="{{ userId }}"></div>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>
