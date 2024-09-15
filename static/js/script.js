@@ -81,38 +81,9 @@
 
     //-----------------------
 
-    // Timer and End Session Logic
-    let sessionTime = 60; // 1 minutes in seconds
-    let timer;
-
-    // Function to format time (minutes and seconds)
-    function formatTime(seconds) {
-      const minutes = Math.floor(seconds / 60);
-      const remainingSeconds = seconds % 60;
-      return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
-    }
-
-    // Function to update the timer display
-    function updateTimer() {
-      sessionTime--;
-      document.getElementById("timer-display").innerHTML =
-        "Time left: " + formatTime(sessionTime);
-
-      if (sessionTime <= 0) {
-        clearInterval(timer);
-        endSession(); // Automatically end session after 10 minutes
-      }
-    }
-    // Function to start the timer when the session starts
-    function startTimer() {
-      document.getElementById("timer-display").innerHTML =
-        "Time left: " + formatTime(sessionTime);
-      timer = setInterval(updateTimer, 1000); // Update the timer every second
-    }
-
     // Function to end the session
     function endSession() {
-      clearInterval(timer); // Stop the timer
+      // clearInterval(timer); // Stop the timer
       // Send a request to the Flask backend to end the session
       fetch("/end-session", {
         method: "POST",
@@ -127,11 +98,6 @@
         })
         .catch((error) => console.error("Error:", error));
     }
-
-    // Start the timer when the page loads
-    window.onload = function () {
-      startTimer();
-    };
 
     // End Session button handler
     $("#end-session-btn").click(function () {
