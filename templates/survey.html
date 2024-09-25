@@ -60,15 +60,24 @@
         button:hover {
             background-color: #45a049;
         }
-        .multiple-choice-group {
-            margin-bottom: 20px;
-        }
+        .multiple-choice-group,
+        .likert-scale-group,
         .rating-group {
             margin-bottom: 20px;
         }
         .submit-btn {
             display: flex;
             justify-content: center;
+        }
+        .likert-scale-group table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .likert-scale-group th,
+        .likert-scale-group td {
+            text-align: center;
+            padding: 8px;
+            border: 1px solid #ddd;
         }
     </style>
 </head>
@@ -104,9 +113,52 @@
                 <label><input type="radio" name="frequency" value="rarely"> Rarely</label>
             </div>
 
+            <!-- Likert Scale Question -->
+            <div class="likert-scale-group">
+                <p><strong>4. Please indicate how much you agree or disagree with the following statements:</strong></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Statement</th>
+                            <th>Strongly Disagree</th>
+                            <th>Disagree</th>
+                            <th>Neutral</th>
+                            <th>Agree</th>
+                            <th>Strongly Agree</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>The chatbot was easy to use.</td>
+                            <td><input type="radio" name="easy_to_use" value="1"></td>
+                            <td><input type="radio" name="easy_to_use" value="2"></td>
+                            <td><input type="radio" name="easy_to_use" value="3"></td>
+                            <td><input type="radio" name="easy_to_use" value="4"></td>
+                            <td><input type="radio" name="easy_to_use" value="5"></td>
+                        </tr>
+                        <tr>
+                            <td>The chatbot provided accurate responses.</td>
+                            <td><input type="radio" name="accurate_responses" value="1"></td>
+                            <td><input type="radio" name="accurate_responses" value="2"></td>
+                            <td><input type="radio" name="accurate_responses" value="3"></td>
+                            <td><input type="radio" name="accurate_responses" value="4"></td>
+                            <td><input type="radio" name="accurate_responses" value="5"></td>
+                        </tr>
+                        <tr>
+                            <td>I would recommend the chatbot to others.</td>
+                            <td><input type="radio" name="recommend" value="1"></td>
+                            <td><input type="radio" name="recommend" value="2"></td>
+                            <td><input type="radio" name="recommend" value="3"></td>
+                            <td><input type="radio" name="recommend" value="4"></td>
+                            <td><input type="radio" name="recommend" value="5"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
             <!-- Open-Ended Question -->
             <div class="open-ended-group">
-                <p><strong>4. Any comments or suggestions for improvement?</strong></p>
+                <p><strong>5. Any comments or suggestions for improvement?</strong></p>
                 <textarea name="comments" rows="4" placeholder="Enter your comments here..."></textarea>
             </div>
 
