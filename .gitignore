@@ -5,3 +5,4 @@ used_ids.json
 myenv
 __pycache__
 .DS_Store
+.venv/

@@ -191,7 +191,7 @@ def chatbot():
     # Checking if the session has expired
     timeout_redirect = session_timeout()
     if timeout_redirect:
-        return timeout_redirect  # If session has timed out, redirect to login
+        return timeout_redirect  # If session has timed out, redirect to survey
     
     end_time = session['start_time'] + datetime.timedelta(seconds=TIMER_LIMIT)
     current_time = datetime.datetime.now(datetime.timezone.utc)
@@ -266,15 +266,15 @@ def get_response(userText):
 # Define the route for getting the chatbot's response
 @application.route("/get")
 def get_bot_response():
-
-    # Checking if server logged out! (Due to tab sync issues) (Can't be fixed until UI timer and Python timer are exactly the same)
-    if 'user_id' not in session or 'session_token' not in session:
-        return redirect(url_for('login'))  # If not logged in, redirect to login page
     
     # Checking if the session has expired
     timeout_redirect = session_timeout()
     if timeout_redirect:
-        return timeout_redirect  # If session has timed out, redirect to login
+        return timeout_redirect  # If session has timed out, redirect to survey
+    
+    # Checking if server logged out! (Due to tab sync issues) (Can't be fixed until UI timer and Python timer are exactly the same)
+    if 'user_id' not in session or 'session_token' not in session:
+        return redirect(url_for('login'))  # If not logged in, redirect to login page
     
     userText = request.args.get('msg')  # Get the user input from the request parameters.
     return str(get_response(userText))  # Pass the user input to get_response and return the chatbot's response as a string.
@@ -337,8 +337,22 @@ def end_session():
     # TODO Redirect to a logout page instead. 
     # maybe with instructions on how to ask for extra time
     # if needed
-    return redirect(url_for('login'))
+    return redirect(url_for('survey'))
 
+
+# Route for the survey page
+@application.route("/survey", methods=['GET', 'POST'])
+def survey():
+    if request.method == 'POST':
+        # Process survey responses here (you could save them to the database or a file) so something like getting the form data
+        responses = request.form
+        print("Survey responses:", responses)
+        
+        # Redirection
+        return redirect(url_for('thank_you'))
+    
+    # Rendering the form
+    return render_template('survey.html')
 
 
 # Register the save_user_session_data function to be called when the program exits
@@ -346,4 +360,4 @@ atexit.register(save_user_session_data)
 # atexit.register(lambda: scheduler.shutdown())
 
 if __name__ == "__main__":
-    application.run()  # Run the application
+    application.run(debug=True)  # Run the application

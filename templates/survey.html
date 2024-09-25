@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey</title>
+</head>
+<body>
+    <h1>Session Ended - We Value Your Feedback</h1>
+    <form method="POST" action="/survey">
+        <p>How would you rate your experience with the chatbot?</p>
+        <input type="radio" name="rating" value="1"> 1
+        <input type="radio" name="rating" value="2"> 2
+        <input type="radio" name="rating" value="3"> 3
+        <input type="radio" name="rating" value="4"> 4
+        <input type="radio" name="rating" value="5"> 5
+
+        <p>Any comments or suggestions?</p>
+        <textarea name="comments" rows="4" cols="50"></textarea>
+
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
