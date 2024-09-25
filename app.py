@@ -354,6 +354,11 @@ def survey():
     # Rendering the form
     return render_template('survey.html')
 
+# Route for the thank you page
+@application.route("/thank-you")
+def thank_you():
+    return render_template('thank_you.html')
+
 
 # Register the save_user_session_data function to be called when the program exits
 atexit.register(save_user_session_data)
