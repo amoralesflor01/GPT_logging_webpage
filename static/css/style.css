@@ -69,29 +69,44 @@ body {
   height: 600px; /* Increased from 500px - adjust as needed */
   transform: none;
   left: 0;
-  top: 0;
+  top: 10;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   background-color: #fff;
   overflow: hidden;
 }
 
-/* Modify existing email container styles */
-#email {
-  display: block !important; /* Override the inline display:none */
-  width: 100%;
-  margin: 0;
-  padding: 20px;
+/* Email section styles */
+.email-section {
+  height: 600px; /* Match chat window height */
+  display: flex;
+  flex-direction: column;
   border: 1px solid #d1d1d1;
   border-radius: 10px;
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
+  padding: 0; /* Removed padding to make the header align properly */
 }
 
-.email-section {
-  max-height: 600px; /* Match chat window height */
-  overflow-y: auto; /* Enable vertical scrolling */
+/* change made by Girma: Make the email header sticky */
+.email-header {
+  position: sticky; /* Keeps the header fixed at the top */
+  top: 0;
+  background-color: #bcbdc0; /* Matches the background */
+  z-index: 10;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between; /* Aligns title and copy button on the same line */
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional for slight shadow */
 }
+
+/* Email content styles (scrollable part) */
+.email-content {
+  flex: 1; /* Allows the content to take up the remaining height */
+  padding: 20px;
+  overflow-y: auto; /* Enable scrolling for the content */
+}
+
 /* Basic responsive design */
 @media (max-width: 768px) {
   .content-wrapper {
@@ -102,21 +117,6 @@ body {
     margin-bottom: 20px;
   }
 }
-/* .chat_window {
-  position: absolute;
-  width: calc(100% - 20px);
-  max-width: 800px;
-  height: 500px;
-  border-radius: 10px;
-  background-color: #fff;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  background-color: #fff;
-  overflow: hidden;
-} */
-
 
 .top_menu {
   background-color: #fff;

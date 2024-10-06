@@ -103,27 +103,21 @@
     </div>
   </div>
   
-  <!-- Right column: Email -->
-  <div class="email-section">
-    <h2 class="section-title">Email Content</h2>
-    <div id="email">
+   <!-- Right column: Email -->
+   <div class="email-section">
+    <div class="email-header">
+      <h2 class="section-title">Email Content</h2>
       <button
         id="copy-button"
         class="btn btn-secondary"
         onclick="copyToClipboard()"
-        style="
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          display: flex;
-          align-items: center;
-          background-color: grey;
-          color: white;
-        "
+        style="background-color: blue; color: white;"
       >
         <i class="fa-solid fa-copy" style="margin-right: 5px;"></i> Copy
       </button>
+    </div>
 
+    <div class="email-content">
       <h3 style="font-weight: bold; font-size: 1.5rem;">Email Sender:</h3>
       <p id="emailSender" style="font-size: 1.25rem; margin-left: 10px;">{{ email_sender }}</p>
 
