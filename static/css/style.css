@@ -44,7 +44,65 @@ body {
   gap: 2rem;
 }
 
+/* change made by Girma to view email: Added styles for side-by-side layout */
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 0 20px;
+}
+
+.chat-section, .email-section {
+  width: 48%; /* This gives some space between the sections */
+}
+
+.section-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+/* Modify existing chat window styles to work in the new layout */
 .chat_window {
+  position: relative; /* Changed from absolute */
+  width: 100%;
+  height: 600px; /* Increased from 500px - adjust as needed */
+  transform: none;
+  left: 0;
+  top: 0;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  overflow: hidden;
+}
+
+/* Modify existing email container styles */
+#email {
+  display: block !important; /* Override the inline display:none */
+  width: 100%;
+  margin: 0;
+  padding: 20px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.email-section {
+  max-height: 600px; /* Match chat window height */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+/* Basic responsive design */
+@media (max-width: 768px) {
+  .content-wrapper {
+    flex-direction: column;
+  }
+  .chat-section, .email-section {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+/* .chat_window {
   position: absolute;
   width: calc(100% - 20px);
   max-width: 800px;
@@ -57,8 +115,7 @@ body {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   background-color: #fff;
   overflow: hidden;
-}
-
+} */
 
 
 .top_menu {
@@ -99,7 +156,7 @@ body {
   list-style: none;
   padding: 20px 10px 0 10px;
   margin: 0;
-  height: 347px;
+  height: 447px; /* Increase this value proportionally */
   overflow: scroll;
 }
 .messages .message {
@@ -202,17 +259,13 @@ body {
 }
 
 .bottom_wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-  position: relative;
-  width: 100%;
-  background-color: #fff;
-  padding: 20px 20px;
   position: absolute;
   bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 20px;
 }
+
 /* .bottom_wrapper .message_input_wrapper {
   display: inline-block;
   height: 50px;

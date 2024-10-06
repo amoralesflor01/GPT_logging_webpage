@@ -52,7 +52,11 @@
       </button>
     </div>
 
-    <!-- Chat Window -->
+<!-- change made by Girma to view email: Added flex container for side-by-side layout -->
+<div class="content-wrapper">
+  <!-- Left column: Chat -->
+  <div class="chat-section">
+    <h2 class="section-title">Conversation</h2>
     <div id="chat" class="chat_window">
       <div class="top_menu">
         <div class="title">Hi, Your User Id is: {{userId}}</div>
@@ -97,6 +101,40 @@
         </li>
       </div>
     </div>
+  </div>
+  
+  <!-- Right column: Email -->
+  <div class="email-section">
+    <h2 class="section-title">Email Content</h2>
+    <div id="email">
+      <button
+        id="copy-button"
+        class="btn btn-secondary"
+        onclick="copyToClipboard()"
+        style="
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          display: flex;
+          align-items: center;
+          background-color: grey;
+          color: white;
+        "
+      >
+        <i class="fa-solid fa-copy" style="margin-right: 5px;"></i> Copy
+      </button>
+
+      <h3 style="font-weight: bold; font-size: 1.5rem;">Email Sender:</h3>
+      <p id="emailSender" style="font-size: 1.25rem; margin-left: 10px;">{{ email_sender }}</p>
+
+      <h3 style="font-weight: bold; font-size: 1.5rem; margin-top: 20px;">Email Subject:</h3>
+      <p id="emailSubject" style="font-size: 1.25rem; margin-left: 10px;">{{ email_subject }}</p>
+
+      <h3 style="font-weight: bold; font-size: 1.5rem; margin-top: 20px;">Email Content:</h3>
+      <p id="emailBody" style="font-size: 1.25rem; margin-left: 10px;">{{ email_content }}</p>
+    </div>
+  </div>
+</div>
 
     <!-- End Session Button -->
   <button
@@ -106,49 +144,6 @@
   >
     End Session
   </button>
-
-
-    <!-- Email View (shown when the "View Email" button is clicked) -->
-  <div
-    id="email"
-    style="
-      position: relative; /* Ensure positioning of child elements is within this container */
-      display: none;
-      padding: 20px;
-      border: 1px solid #d1d1d1;
-      border-radius: 10px;
-      background-color: #ffffff;
-      width: 80%;
-      margin: 20px auto;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    "
-    >
-    <button
-      id="copy-button"
-      class="btn btn-secondary"
-      onclick="copyToClipboard()"
-      style="
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        display: flex;
-        align-items: center;
-        background-color: grey;
-        color: white;
-      "
-    >
-      <i class="fa-solid fa-copy" style="margin-right: 5px;"></i> Copy
-    </button>
-
-    <h3 style="font-weight: bold; font-size: 1.5rem;">Email Sender:</h3>
-    <p id="emailSender" style="font-size: 1.25rem; margin-left: 10px;">{{ email_sender }}</p>
-
-    <h3 style="font-weight: bold; font-size: 1.5rem; margin-top: 20px;">Email Subject:</h3>
-    <p id="emailSubject" style="font-size: 1.25rem; margin-left: 10px;">{{ email_subject }}</p>
-
-    <h3 style="font-weight: bold; font-size: 1.5rem; margin-top: 20px;">Email Content:</h3>
-    <p id="emailBody" style="font-size: 1.25rem; margin-left: 10px;">{{ email_content }}</p>
-  </div>
 
 
 
