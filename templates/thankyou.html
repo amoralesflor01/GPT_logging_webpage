@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Thank You</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #f0f0f0;
+        }
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #66a6ff;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        a:hover {
+            background-color: #66a6ff;
+            color: #fff;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Thank You!</h1>
+        <p>Your response has been submitted successfully.</p>
+        <a href="/">Return to Home</a>
+    </div>
+</body>
+</html>
