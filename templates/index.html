@@ -14,9 +14,11 @@
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
-    >
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&display=swap" rel="stylesheet">
-
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
@@ -33,28 +35,31 @@
       "
     >
       <p style="font-family: Arial; color: white; font-size: 15px">
-        Please read the email provided carefully and use the chatbot to help you 
-        determine if the email is spam or not. This Chatbot will be used for a 
-        research study, the prompts entered will be recorded and analyzed. Do not 
-        enter any information you wish to keep private.
+        Please read the email provided carefully and use the chatbot to help you
+        determine if the email is spam or not. This Chatbot will be used for a
+        research study, the prompts entered will be recorded and analyzed. Do
+        not enter any information you wish to keep private.
       </p>
     </div>
-    
+
     <div class="session-info">
-        <!-- End Session Button -->
-        <button id="end-session-btn" class="btn btn-success" onclick="endSession()">
-            Proceed To Survey
-        </button>
-        
-        {# Timer #}
-        <p id="timer" style="font-weight: bold; font-size: 2rem;">
-            {{TIMER_LIMIT|timer_format}}
-        </p>
-    
+      <!-- End Session Button -->
+      <button
+        id="end-session-btn"
+        class="btn btn-success"
+        onclick="endSession()"
+      >
+        Proceed To Survey
+      </button>
+
+      {# Timer #}
+      <p id="timer" style="font-weight: bold; font-size: 2rem">
+        {{ TIMER_LIMIT|timer_format }}
+      </p>
     </div>
-     
+
     <!-- Add tab buttons @girma_terfa -->
-     <!-- 
+    <!-- 
     <div class="container" style="margin-bottom: 20px; text-align: center">
       <button class="btn btn-info" onclick="showTab('chat')">Chat</button>
       <button class="btn btn-info" onclick="showTab('email')">
@@ -62,7 +67,7 @@
       </button>
     </div>
     -->
-  
+
     <!-- Chat Window -->
     <div id="chat" class="chat_window">
       <div class="top_menu">
@@ -109,117 +114,166 @@
       </div>
     </div>
 
-  <!-- Gmail Email View in a Contained Box -->
-  <div id="gmail-ui" class="gmail-ui-container" style="display: block;">
-    <!-- Gmail Header -->
-    <div class="gmail-top-bar">
-      <div class="gmail-logo">
-        <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" alt="Gmail Logo" class="gmail-logo-icon" />
-        <span>Gmail</span>
-      </div>
-      <div class="gmail-search">
-        <input type="text" class="gmail-search-bar" placeholder="Search mail" />
-      </div>
-      <div class="gmail-top-icons">
-        <img src="https://ssl.gstatic.com/ui/v1/icons/mail/profile_mask2.png" alt="User Profile" class="gmail-profile-icon" />
-      </div>
-    </div>
-
-    <!-- Gmail Sidebar (Fixed Position and Non-Overlapping) -->
-    <div class="gmail-sidebar">
-      <ul>
-        <li><a href="#"><i class="fa fa-inbox"></i> Inbox</a></li>
-        <li><a href="#"><i class="fa fa-star"></i> Starred</a></li>
-        <li><a href="#"><i class="fa fa-clock"></i> Snoozed</a></li>
-        <li><a href="#"><i class="fa fa-paper-plane"></i> Sent</a></li>
-        <li><a href="#"><i class="fa fa-file"></i> Drafts</a></li>
-      </ul>
-    </div>
-
-    <!--ADDED ICONS-->
-    <div class="gmail-icons-left">
-      <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/archive_24dp.png" class="gmail-icon">
-      <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/report_24dp.png" class="gmail-icon">
-      <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/delete_24dp.png" class="gmail-icon">
-      <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/mark_as_unread_24dp.png" class="gmail-icon">
-      <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/move_to_24dp.png" class="gmail-icon">
-      <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/label_24dp.png" class="gmail-icon">
-    </div>
-    
-
-    <!-- Gmail Content -->
-    <div class="gmail-content">
-      <div class="gmail-email-header">
-        <h2>{{ email_subject }}</h2>
-        <div class="gmail-email-sender">
-          <strong>{{ email_sender }}</strong>
+    <!-- Gmail Email View in a Contained Box -->
+    <div id="gmail-ui" class="gmail-ui-container" style="display: block">
+      <!-- Gmail Header -->
+      <div class="gmail-top-bar">
+        <div class="gmail-logo">
+          <img
+            src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico"
+            alt="Gmail Logo"
+            class="gmail-logo-icon"
+          />
+          <span>Gmail</span>
         </div>
-        <div class="gmail-recipient">
-          <span>To: username@gmail.com</span> <!-- Hardcoded recipient -->
+        <div class="gmail-search">
+          <input
+            type="text"
+            class="gmail-search-bar"
+            placeholder="Search mail"
+          />
         </div>
-        <div class="gmail-email-date">
-          <span>Thu, 5 Oct 2024, 4:00 PM</span> <!-- Hardcoded date -->
+        <div class="gmail-top-icons">
+          <img
+            src="https://ssl.gstatic.com/ui/v1/icons/mail/profile_mask2.png"
+            alt="User Profile"
+            class="gmail-profile-icon"
+          />
         </div>
       </div>
 
-      <div class="gmail-body">
-        <p>{{ email_content }}</p>
+      <!-- Gmail Sidebar (Fixed Position and Non-Overlapping) -->
+      <div class="gmail-sidebar">
+        <ul>
+          <li>
+            <a href="#"><i class="fa fa-inbox"></i> Inbox</a>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-star"></i> Starred</a>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-clock"></i> Snoozed</a>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-paper-plane"></i> Sent</a>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-file"></i> Drafts</a>
+          </li>
+        </ul>
       </div>
 
-      <div class="gmail-reply-options">
-        <button class="gmail-reply-btn"><i class="fa fa-reply"></i> Reply</button>
-        <button class="gmail-reply-all-btn"><i class="fa fa-reply-all"></i> Reply All</button>
-        <button class="gmail-forward-btn"><i class="fa fa-forward"></i> Forward</button>
+      <!--ADDED ICONS-->
+      <div class="gmail-icons-left">
+        <img
+          src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/archive_24dp.png"
+          class="gmail-icon"
+        />
+        <img
+          src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/report_24dp.png"
+          class="gmail-icon"
+        />
+        <img
+          src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/delete_24dp.png"
+          class="gmail-icon"
+        />
+        <img
+          src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/mark_as_unread_24dp.png"
+          class="gmail-icon"
+        />
+        <img
+          src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/move_to_24dp.png"
+          class="gmail-icon"
+        />
+        <img
+          src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/label_24dp.png"
+          class="gmail-icon"
+        />
+      </div>
+
+      <!-- Gmail Content -->
+      <div class="gmail-content">
+        <div class="gmail-email-header">
+          <h2>{{ email_subject }}</h2>
+          <div class="gmail-email-sender">
+            <strong>{{ email_sender }}</strong>
+          </div>
+          <div class="gmail-recipient">
+            <span>To: username@gmail.com</span>
+            <!-- Hardcoded recipient -->
+          </div>
+          <div class="gmail-email-date">
+            <span>Thu, 5 Oct 2024, 4:00 PM</span>
+            <!-- Hardcoded date -->
+          </div>
+        </div>
+
+        <div class="gmail-body">
+          <p>{{ email_content }}</p>
+        </div>
+
+        <div class="gmail-reply-options">
+          <button class="gmail-reply-btn">
+            <i class="fa fa-reply"></i> Reply
+          </button>
+          <button class="gmail-reply-all-btn">
+            <i class="fa fa-reply-all"></i> Reply All
+          </button>
+          <button class="gmail-forward-btn">
+            <i class="fa fa-forward"></i> Forward
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-
 
     <!-- Styles for Improved UI/UX -->
     <style>
       .email-container {
-          display: none; /* Initially hidden */
-          padding: 20px;
-          border: 1px solid #d1d1d1;
-          border-radius: 10px;
-          background-color: #ffffff;
-          max-width: 700px;
-          margin: 20px auto;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: none; /* Initially hidden */
+        padding: 20px;
+        border: 1px solid #d1d1d1;
+        border-radius: 10px;
+        background-color: #ffffff;
+        max-width: 700px;
+        margin: 20px auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
 
       .email-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
 
       .email-heading {
-          font-size: 1.3em;
-          font-weight: bold;
-          color: #333;
-          margin-top: 15px;
+        font-size: 1.3em;
+        font-weight: bold;
+        color: #333;
+        margin-top: 15px;
       }
     </style>
 
     <!-- JavaScript for Copy Functionality -->
     <script>
       // Add event listeners to the buttons
-      document.querySelector('.gmail-reply-btn').addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent any default action
-      });
-    
-      document.querySelector('.gmail-reply-all-btn').addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent any default action
-      });
-    
-      document.querySelector('.gmail-forward-btn').addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent any default action
-      });
+      document
+        .querySelector(".gmail-reply-btn")
+        .addEventListener("click", (event) => {
+          event.preventDefault(); // Prevent any default action
+        });
+
+      document
+        .querySelector(".gmail-reply-all-btn")
+        .addEventListener("click", (event) => {
+          event.preventDefault(); // Prevent any default action
+        });
+
+      document
+        .querySelector(".gmail-forward-btn")
+        .addEventListener("click", (event) => {
+          event.preventDefault(); // Prevent any default action
+        });
     </script>
-    
-
-
 
     <!-- To pass a variable in external JS -->
     <!-- No longer used, moved the usage inside python -->
@@ -231,48 +285,40 @@
     <script>
       function showTab(tabId) {
         // Initially hide both chat and email
-        document.getElementById('chat').style.display = 'none';
-        document.getElementById('gmail-ui').style.display = 'none';
-      
+        document.getElementById("chat").style.display = "none";
+        document.getElementById("gmail-ui").style.display = "none";
+
         // Display the correct tab based on the button clicked
-        if (tabId === 'chat') {
-          document.getElementById('chat').style.display = 'block'; // Show chat
-        } else if (tabId === 'email') {
-          document.getElementById('gmail-ui').style.display = 'block'; // Show email
+        if (tabId === "chat") {
+          document.getElementById("chat").style.display = "block"; // Show chat
+        } else if (tabId === "email") {
+          document.getElementById("gmail-ui").style.display = "block"; // Show email
         }
       }
-                           
     </script>
-    
-    
     <script>
-      // Set the timer to 5 minutes (300 seconds)
-      let timeRemaining = {{TIMER_LIMIT}};
+      // Initialize timeRemaining from the server-rendered TIMER_LIMIT variable
+      let timeRemaining = {{ TIMER_LIMIT }};
 
       // Function to start the countdown
       function startCountdown() {
           const timer = setInterval(function() {
-              timeRemaining--;
-
-              // Calculate minutes and seconds
+              // Calculate minutes and seconds from the remaining time
               const minutes = Math.floor(timeRemaining / 60);
               const seconds = timeRemaining % 60;
 
               // Display the time in MM:SS format
               document.getElementById('timer').innerHTML = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 
-              // TODO Somehow sync with the server side code for exact same display across tabs/devices.
-
-              // If time runs out, clear the timer and redirect to the login page
+              // Check if the timer has expired
               if (timeRemaining <= 0) {
                   clearInterval(timer);
-                  //TODO: Alert doesn't work.
-                  alert("Session expired! You will be logged out.");
-                  //TODO: Am pretty sure, this href, makes it that
-                  // maybe instead of redirecting to /, /get makes sure python runs before exiting
-                  // @Aditya (Rebooting-me)
-                  window.location.href = "/get";  // Redirect to the login page
+                  alert("Session expired! You will be redirected.");
+                  window.location.href = "/end-session";
               }
+
+              // Decrease timeRemaining by 1 second
+              timeRemaining--;
           }, 1000);  // Update the timer every second (1000ms)
       }
 

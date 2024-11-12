@@ -242,32 +242,34 @@ def chatbot():
     if 'user_id' not in session or 'session_token' not in session:
         return redirect(url_for('login'))
 
-    # Checking if the session has expired
+    # Check if the survey was completed
+    existing_user = svc.find_account_by_user_id(session['user_id'])
+    if existing_user.survey_completed:
+        flash("Survey already completed. You cannot log in again.")
+        return redirect(url_for('login'))  # Redirect to login if survey is completed
+
+    # Timer expiration check
     timeout_redirect = session_timeout()
     if timeout_redirect:
-        return timeout_redirect  # If session has timed out, redirect to login
+        return timeout_redirect  # If session has timed out, redirect to survey or login
 
-    # Fetch the user's start_time and ensure it's timezone-aware
-    existing_user = svc.find_account_by_user_id(session['user_id'])
+    # Ensure start_time is timezone-aware for accurate comparison
     start_time = existing_user.start_time
-
-    # Ensure start_time is timezone-aware
     if start_time.tzinfo is None:
         start_time = start_time.replace(tzinfo=datetime.timezone.utc)
 
     # Make current_time timezone-aware
     current_time = datetime.datetime.now(datetime.timezone.utc)
 
-    # Calculate remaining time only after the timer has started
+    # Calculate remaining time for the session timer
     if existing_user.timer_is_running:
         end_time = start_time + datetime.timedelta(seconds=TIMER_LIMIT)
         time_left = max(0, math.ceil((end_time - current_time).total_seconds()))
     else:
-        time_left = TIMER_LIMIT  # If the timer hasn't started, show full time
+        time_left = TIMER_LIMIT  # If timer hasn't started, set full time
 
-    # Fetch email to display
+    # Fetch email content to display in the chat interface
     email = svc.getEmailRecordByUuid(session["email_id"])
-
     email_sender = email["From"].values[0]
     email_subject = email["Subject"].values[0]
     email_content = email["Email Content"].values[0]
