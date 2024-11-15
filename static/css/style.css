@@ -3,6 +3,8 @@
   border-bottom: 3px solid aqua;
 }
 
+/* User Message Styling */
+/* User Message Styling */
 .userText {
   color: white;
   font-family: monospace;
@@ -10,11 +12,17 @@
   text-align: right;
   line-height: 30px;
 }
+
+
 .userText span {
   background-color: #009688;
   padding: 10px;
   border-radius: 10px;
 }
+
+/* Bot Message Styling */
+
+/* Bot Message Styling */
 .botText {
   color: white;
   font-family: monospace;
@@ -22,206 +30,396 @@
   text-align: left;
   line-height: 30px;
 }
+
+
 .botText span {
   background-color: #ae312f;
   padding: 5px;
   border-radius: 10px;
 }
 
+/* Global box-sizing */
+/* Global box-sizing */
 * {
-box-sizing: border-box;
+  box-sizing: border-box;
+  box-sizing: border-box;
 }
 
+/* Basic body styling */
+/* Basic body styling */
 body {
-background-color: #edeff2;
-font-family: "Calibri", "Roboto", sans-serif;
+  background-color: #edeff2;
+  font-family: "Calibri", "Roboto", sans-serif;
+  background-color: #edeff2;
+  font-family: "Calibri", "Roboto", sans-serif;
 }
 
-.top_nav{
-display: flex;
-justify-content: center;
-align-items: center;
-gap: 2rem;
+/* Top navigation bar */
+.top_nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+/* Top navigation bar */
+.top_nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 }
 
-
+/*start_chat_window_features*/
+  
+/*start_chat_window_features*/
+  
 /* Chat Window */
 .chat_window {
   position: fixed;
-  bottom: 10px; /* Space from the bottom */
-  right: 10px;  /* Space from the right */
-  width: 450px; /* Slightly smaller width */
-  height: 500px; /* Full height */
+  bottom: 10px;
+  right: 10px;
+  width: 400px;
+  height: 500px; /* Full height when expanded */
+  bottom: 10px;
+  right: 10px;
+  width: 400px;
+  height: 500px; /* Full height when expanded */
   background-color: white;
-  z-index: 100; /* Above the Gmail UI */
+  z-index: 100;
+  z-index: 100;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  transition: height 0.3s ease; /* Smooth height transition */
+  transition: height 0.3s ease; /* Smooth height transition */
 }
-
-
-
 
 .top_menu {
-background-color: #4a8bad;
-width: 100%;
-padding: 20px 0 15px;
-box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
+  background-color: #4a8bad;
+  width: 100%;
+  padding: 20px 0 15px;
+  box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
+  cursor: pointer; /* Make the header clickable */
 }
-.top_menu .buttons {
-margin: 3px 0 0 20px;
-position: absolute;
+
+  background-color: #4a8bad;
+  width: 100%;
+  padding: 20px 0 15px;
+  box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
+  cursor: pointer; /* Make the header clickable */
 }
-.top_menu .buttons .button {
-width: 16px;
-height: 16px;
-border-radius: 50%;
-display: inline-block;
-margin-right: 10px;
-position: relative;
-}
-.top_menu .buttons .button.close {
-background-color: #f5886e;
-}
-.top_menu .buttons .button.minimize {
-background-color: #fdbf68;
-}
-.top_menu .buttons .button.maximize {
-background-color: #a3d063;
-}
+
 .top_menu .title {
-text-align: center;
-color: #ffffff;
-font-size: 20px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 20px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 20px;
+}
+
+/* New: Collapsible Chat Content */
+#chatContent {
+  display: block;
+  max-height: 400px;
+  overflow-y: auto;
+  /* transition: max-height 0.3s ease; Smooth max-height transition */
+  display: block;
+}
+
+/* <!-- Styles for Improved UI/UX --> */
+.email-container {
+    display: none; /* Initially hidden */
+    padding: 20px;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    background-color: #ffffff;
+    max-width: 700px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.email-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.email-heading {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #333;
+    margin-top: 15px;
+}
+
+/* Collapsed Chat Window with picture Background */
+  #collapsed-chat {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-image: url('../images/logos/bot.png'); /* Adjust path if necessary */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 2;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+.chat_window.expanded {
+  height: 500px; /* Full height when expanded */
+}
+
+/* Hide chat content when collapsed */
+.collapsed #chatContent {
+  display: none;
+  max-height: 0;
+  overflow: hidden;
+}
+
+/* New: Collapsible Chat Content */
+#chatContent {
+  display: block;
+  max-height: 400px;
+  overflow-y: auto;
+  /* transition: max-height 0.3s ease; Smooth max-height transition */
+  display: block;
+}
+
+/* <!-- Styles for Improved UI/UX --> */
+.email-container {
+    display: none; /* Initially hidden */
+    padding: 20px;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    background-color: #ffffff;
+    max-width: 700px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.email-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.email-heading {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #333;
+    margin-top: 15px;
+}
+
+/* Collapsed Chat Window with picture Background */
+  #collapsed-chat {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-image: url('../images/logos/bot.png'); /* Adjust path if necessary */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 2;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+.chat_window.expanded {
+  height: 500px; /* Full height when expanded */
+}
+
+/* Hide chat content when collapsed */
+.collapsed #chatContent {
+  display: none;
+  max-height: 0;
+  overflow: hidden;
 }
 
 .messages {
-position: relative;
-list-style: none;
-padding: 20px 10px 0 10px;
-margin: 0;
-height: 347px;
-overflow: scroll;
+  position: relative;
+  list-style: none;
+  padding: 20px 10px 0 10px;
+  margin: 0;
+  height: 347px;
+  overflow: scroll;
+  position: relative;
+  list-style: none;
+  padding: 20px 10px 0 10px;
+  margin: 0;
+  height: 347px;
+  overflow: scroll;
 }
+
+
 .messages .message {
-clear: both;
-overflow: hidden;
-margin-bottom: 20px;
-transition: all 0.5s linear;
-opacity: 0;
+  clear: both;
+  overflow: hidden;
+  margin-bottom: 20px;
+  transition: all 0.5s linear;
+  opacity: 0;
+  clear: both;
+  overflow: hidden;
+  margin-bottom: 20px;
+  transition: all 0.5s linear;
+  opacity: 0;
 }
+
+/* Bot Message */
+
+/* Bot Message */
 .messages .message.left .avatar {
-background-color: #f5886e;
-float: left;
+  background-color: #f5886e;
+  float: left;
+  width: 50px;
+  height: 50px;
+  background-image: url('../images/logos/bot.png');
+  background-size: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+  background-color: #f5886e;
+  float: left;
+  width: 50px;
+  height: 50px;
+  background-image: url('../images/logos/bot.png');
+  background-size: cover;
+  border-radius: 50%;
+  margin-right: 10px;
 }
+
 .messages .message.left .text_wrapper {
-background-color: #ffe6cb;
-margin-left: 20px;
+  background-color: #ffe6cb;
+  margin-left: 20px;
 }
-.messages .message.left .text_wrapper::after, .messages .message.left .text_wrapper::before {
-right: 100%;
-border-right-color: #ffe6cb;
-}
+
 .messages .message.left .text {
-color: #1b1b1b;
-}
-.messages .message.left .avatar {
-float: left;
-width: 50px;
-height: 50px;
-background-image: url('../images/logos/bot.png');
-background-size: cover;
-border-radius: 50%;
-margin-right: 10px;
+  color: #1b1b1b;
 }
 
-/* here is the change */
+/* User Message */
+.messages .message.left .text_wrapper {
+  background-color: #ffe6cb;
+  margin-left: 20px;
+}
 
+.messages .message.left .text {
+  color: #1b1b1b;
+}
+
+/* User Message */
 .messages .message.right .avatar {
-float: right;
-width: 50px;
-height: 50px;
-background-image: url('../images/logos/user.png');
-background-size: cover;
-border-radius: 50%;
-margin-left: 10px;
+  float: right;
+  width: 50px;
+  height: 50px;
+  background-image: url('../images/logos/user.png');
+  background-size: cover;
+  border-radius: 50%;
+  margin-left: 10px;
+  float: right;
+  width: 50px;
+  height: 50px;
+  background-image: url('../images/logos/user.png');
+  background-size: cover;
+  border-radius: 50%;
+  margin-left: 10px;
 }
-
-
-
-/* here is the change */
 
 .messages .message.right .text_wrapper {
-background-color: #c7eafc;
-margin-right: 20px;
-float: right;
-}
-.messages .message.right .text_wrapper::after, .messages .message.right .text_wrapper::before {
-left: 100%;
-border-left-color: #c7eafc;
-}
-.messages .message.right .text {
-color: #1b1b1b;
-}
-.messages .message.appeared {
-opacity: 1;
-}
-.messages .message .avatar {
-width: 60px;
-height: 60px;
-border-radius: 50%;
-display: inline-block;
-}
-.messages .message .text_wrapper {
-display: inline-block;
-padding: 20px;
-border-radius: 6px;
-width: calc(100% - 85px);
-min-width: 100px;
-position: relative;
-}
-.messages .message .text_wrapper::after, .messages .message .text_wrapper:before {
-top: 18px;
-border: solid transparent;
-content: " ";
-height: 0;
-width: 0;
-position: absolute;
-pointer-events: none;
-}
-.messages .message .text_wrapper::after {
-border-width: 13px;
-margin-top: 0px;
-}
-.messages .message .text_wrapper::before {
-border-width: 15px;
-margin-top: -2px;
-}
-.messages .message .text_wrapper .text {
-font-size: 18px;
-font-weight: 300;
+  background-color: #c7eafc;
+  margin-right: 20px;
+  float: right;
+  background-color: #c7eafc;
+  margin-right: 20px;
+  float: right;
 }
 
+
+.messages .message.right .text {
+  color: #1b1b1b;
+  color: #1b1b1b;
+}
+
+
+.messages .message.appeared {
+  opacity: 1;
+  opacity: 1;
+}
+
+.collapsed #chatContent {
+  max-height: 0; /* Hide content with smooth collapse */
+  overflow: hidden; /* Prevent content overflow */
+}
+
+
+/* End chat message styling */
+
+.collapsed #chatContent {
+  max-height: 0; /* Hide content with smooth collapse */
+  overflow: hidden; /* Prevent content overflow */
+}
+
+
+/* End chat message styling */
+.messages .message .avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+
+.messages .message .text_wrapper {
+  display: inline-block;
+  padding: 20px;
+  border-radius: 6px;
+  width: calc(100% - 85px);
+  min-width: 100px;
+  position: relative;
+  display: inline-block;
+  padding: 20px;
+  border-radius: 6px;
+  width: calc(100% - 85px);
+  min-width: 100px;
+  position: relative;
+}
+
+
+.messages .message .text_wrapper .text {
+  font-size: 18px;
+  font-weight: 300;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+/* Bottom Input and Send Message */
+/* Bottom Input and Send Message */
 .bottom_wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-position: relative;
-width: 100%;
-background-color: #fff;
-padding: 20px 20px;
-position: absolute;
-bottom: 0;
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  padding: 20px 20px;
+  position: absolute;
+  bottom: 0;
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  padding: 20px 20px;
+  position: absolute;
+  bottom: 0;
 }
-/* .bottom_wrapper .message_input_wrapper {
-display: inline-block;
-height: 50px;
-border-radius: 25px;
-border: 1px solid #bcbdc0;
-width: calc(100% - 160px);
-position: relative;
-padding: 0 20px;
-} */
+
+
 .bottom_wrapper .message_input_wrapper {
   flex-grow: 1;
   display: flex;
@@ -231,15 +429,8 @@ padding: 0 20px;
   padding: 0 20px;
   margin-right: 10px;
 }
-/* .bottom_wrapper .message_input_wrapper .message_input {
-border: none;
-height: 100%;
-box-sizing: border-box;
-width: calc(100% - 40px);
-position: absolute;
-outline-width: 0;
-color: gray;
-} */
+
+
 .bottom_wrapper .message_input {
   width: 100%;
   height: 100%;
@@ -248,24 +439,8 @@ color: gray;
   background: none;
   font-size: 16px;
 }
-.bottom_wrapper .send_message .text {
-  font-size: 18px;
-  font-weight: 300;
-  margin-left: 8px;
-}
-/* .bottom_wrapper .send_message {
-width: 140px;
-height: 50px;
-display: inline-block;
-border-radius: 50px;
-background-color: #a3d063;
-border: 2px solid #a3d063;
-color: #fff;
-cursor: pointer;
-transition: all 0.2s linear;
-text-align: center;
-float: right;
-} */
+
+
 .bottom_wrapper .send_message {
   width: 140px;
   height: 50px;
@@ -285,197 +460,264 @@ float: right;
 }
 
 .bottom_wrapper .send_message:hover {
-color: #a3d063;
-background-color: #fff;
+  color: #a3d063;
+  background-color: #fff;
+  color: #a3d063;
+  background-color: #fff;
 }
-/* .bottom_wrapper .send_message .text {
-font-size: 18px;
-font-weight: 300;
-display: inline-block;
-line-height: 48px;
-} */
-.bottom_wrapper .send_message .text {
-  font-size: 18px;
-  font-weight: 300;
-  line-height: 48px;
-  margin-left: 8px;
-}
+
+
 .bottom_wrapper .send_message .icon img {
   height: 24px;
   width: 24px;
 }
+
+
 /* Media query for small screens */
 @media (max-width: 600px) {
   .bottom_wrapper .send_message .text {
-      display: none;
+    display: none;
+    display: none;
   }
 
   .bottom_wrapper .send_message {
-      width: 50px;
+    width: 50px;
+    width: 50px;
   }
 }
 
 .message_template {
-display: none;
+  display: none;
+  display: none;
 }
 
-.footer #button{
-width:55px;
-height:55px;
-border: #4e919c 12px solid;
-border-radius:35px;
-margin:0 auto;
-position:relative;
--webkit-transition: all 1s ease;
-  -moz-transition: all 1s ease;
-  -o-transition: all 1s ease;
-  -ms-transition: all 1s ease;
+/*end_chat_window_feature*/
+
+/* Footer Styling (Separate feature) */
+.footer #button {
+  width: 55px;
+  height: 55px;
+  border: #4e919c 12px solid;
+  border-radius: 35px;
+  margin: 0 auto;
+  position: relative;
+}
+/*end_chat_window_feature*/
+
+/* Footer Styling (Separate feature) */
+.footer #button {
+  width: 55px;
+  height: 55px;
+  border: #4e919c 12px solid;
+  border-radius: 35px;
+  margin: 0 auto;
+  position: relative;
   transition: all 1s ease;
 }
-.footer #button:hover{
-width:55px;
-height:55px;
-border: #3A3A3A 12px solid;
--webkit-transition: all 1s ease;
-  -moz-transition: all 1s ease;
-  -o-transition: all 1s ease;
-  -ms-transition: all 1s ease;
-  transition: all 1s ease;
-position:relative;
+
+.footer #button:hover {
+  width: 55px;
+  height: 55px;
+  border: #3A3A3A 12px solid;
 }
+
+.footer #button:hover {
+  width: 55px;
+  height: 55px;
+  border: #3A3A3A 12px solid;
+  transition: all 1s ease;
+  position: relative;
+  position: relative;
+}
+
+
 .footer {
-bottom:0;
-left:0;
-position:fixed;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  position: fixed;
   width: 100%;
   height: 2em;
-  overflow:hidden;
-  margin:0 auto;
--webkit-transition: all 1s ease;
-  -moz-transition: all 1s ease;
-  -o-transition: all 1s ease;
-  -ms-transition: all 1s ease;
+  overflow: hidden;
+  margin: 0 auto;
+  overflow: hidden;
+  margin: 0 auto;
   transition: all 1s ease;
-z-index:999;
-}
-.footer:hover {
--webkit-transition: all 1s ease;
-  -moz-transition: all 1s ease;
-  -o-transition: all 1s ease;
-  -ms-transition: all 1s ease;
-  transition: all 1s ease;
-height: 10em;
-}
-.footer #container{
-margin-top:5px;
-width:100%;
-height:100%;
-position:relative;
-top:0;
-left:0;
-background: #4e919c;
-}
-.footer #cont{
-position:relative;
-top:-45px;
-right:190px;
-width:150px;
-height:auto;
-margin:0 auto;
-}
-.footer_center{
-width:500px;
-float:left;
-text-align:center;
-}
-.footer h3{
-font-family: 'Arial';
-font-size: 20px;
-font-weight: 100;
-margin-top:70px;
-margin-left:10px;
+  z-index: 999;
+  z-index: 999;
 }
 
-html,body {
-height: 100%;
+
+.footer:hover {
+  transition: all 1s ease;
+  height: 10em;
+  height: 10em;
+}
+
+.footer #container {
+  margin-top: 5px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  background: #4e919c;
+}
+
+.footer #container {
+  margin-top: 5px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  background: #4e919c;
+}
+
+.footer h3 {
+  font-family: 'Arial';
+  font-size: 20px;
+  font-weight: 100;
+  margin-top: 70px;
+  margin-left: 10px;
+}
+
+.footer h3 {
+  font-family: 'Arial';
+  font-size: 20px;
+  font-weight: 100;
+  margin-top: 70px;
+  margin-left: 10px;
+}
+
+html, body {
+  height: 100%;
+html, body {
+  height: 100%;
 }
 
 body.my-login-page {
-background-color: #f7f9fb;
-font-size: 14px;
+  background-color: #f7f9fb;
+  font-size: 14px;
+  background-color: #f7f9fb;
+  font-size: 14px;
 }
 
 .my-login-page .brand {
-width: 150px;
-height: 150px;
-overflow: hidden;
-border-radius: 40%;
-margin: 40px auto;
-box-shadow: 0 4px 8px rgba(0,0,0,.05);
-position: relative;
-z-index: 1;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 40%;
+  margin: 40px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .05);
+  position: relative;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 40%;
+  margin: 40px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .05);
+  position: relative;
+  z-index: 1;
 }
 
 .my-login-page .brand img {
-width: 100%;
+  width: 100%;
+  width: 100%;
 }
 
+/* Card wrapper for login pages */
+/* Card wrapper for login pages */
 .my-login-page .card-wrapper {
-width: 400px;
+  width: 400px;
+  width: 400px;
 }
 
 .my-login-page .card {
-border-color: transparent;
-box-shadow: 0 4px 8px rgba(0,0,0,.05);
+  border-color: transparent;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .05);
+  border-color: transparent;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .05);
 }
 
 .my-login-page .card.fat {
-padding: 10px;
+  padding: 10px;
+  padding: 10px;
 }
 
 .my-login-page .card .card-title {
-margin-bottom: 30px;
+  margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .my-login-page .form-control {
-border-width: 2.3px;
+  border-width: 2.3px;
+  border-width: 2.3px;
 }
 
 .my-login-page .form-group label {
-width: 100%;
+  width: 100%;
+  width: 100%;
 }
 
 .my-login-page .btn.btn-block {
-padding: 12px 10px;
+  padding: 12px 10px;
+  padding: 12px 10px;
 }
 
 .my-login-page .footer {
-margin: 40px 0;
-color: #888;
-text-align: center;
-}
+  margin: 40px 0;
+  color: #888;
+  text-align: center;
+  }
+  margin: 40px 0;
+  color: #888;
+  text-align: center;
+  }
 
-@media screen and (max-width: 425px) {
-.my-login-page .card-wrapper {
-  width: 90%;
-  margin: 0 auto;
-}
-}
-
-@media screen and (max-width: 320px) {
-.my-login-page .card.fat {
-  padding: 0;
-}
-
-.my-login-page .card.fat .card-body {
-  padding: 15px;
-}
-}
+  /* Responsive design for login pages */
+  @media screen and (max-width: 425px) {
+    .my-login-page .card-wrapper {
+      width: 90%;
+      margin: 0 auto;
+    }
+  }
+    
+  @media screen and (max-width: 320px) {
+    .my-login-page .card.fat {
+      padding: 0;
+    }
+    
+    .my-login-page .card.fat .card-body {
+      padding: 15px;
+     }
+  }
+  /* Responsive design for login pages */
+  @media screen and (max-width: 425px) {
+    .my-login-page .card-wrapper {
+      width: 90%;
+      margin: 0 auto;
+    }
+  }
+    
+  @media screen and (max-width: 320px) {
+    .my-login-page .card.fat {
+      padding: 0;
+    }
+    
+    .my-login-page .card.fat .card-body {
+      padding: 15px;
+     }
+  }
 
 /* GOOGLE */
 .gmail-ui-container {
   position: fixed;
-  top: 70px; /* Below the disclaimer */
+  top: 120px; /* Adjust this to control the vertical space from the top */
+  top: 120px; /* Adjust this to control the vertical space from the top */
   left: 0;
   right: 0;
   bottom: 0;
@@ -487,6 +729,10 @@ text-align: center;
   border-radius: 8px;
   font-family: Arial, sans-serif;
   overflow: auto; /* Allow scrolling if content exceeds window */
+  display: flex;
+  height: calc(100vh - 120px); /* Subtract the same top space to prevent overflow */
+  display: flex;
+  height: calc(100vh - 120px); /* Subtract the same top space to prevent overflow */
 }
 
 
@@ -597,6 +843,10 @@ text-align: center;
   padding: 80px 40px 40px 40px;
   position: relative;
   z-index: 1; /* Content should appear under the top bar and sidebar */
+  overflow-y: auto; /* Enable vertical scrolling for content */
+  height: calc(100vh - 50px); /* Adjust based on top bar height */
+  overflow-y: auto; /* Enable vertical scrolling for content */
+  height: calc(100vh - 50px); /* Adjust based on top bar height */
 }
 
 .gmail-email-header h2 {
@@ -680,17 +930,267 @@ text-align: center;
   margin-left: auto;
 }
 
-.session-info {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
+/* 
+making the body fit to small screen
+*/
+/* Responsive styles for small screens */
+@media (max-width: 768px) {
+    /* Top Bar Adjustments */
+    .gmail-top-bar {
+        padding: 8px 10px; /* Reduce padding */
+        font-size: 14px; /* Reduce font size */
+    }
+
+    .gmail-logo-icon {
+        width: 24px; /* Smaller logo icon */
+        height: 24px;
+    }
+
+    .gmail-search-bar {
+        width: 70%; /* Adjust search bar width */
+        padding: 6px; /* Smaller padding */
+    }
+
+    .gmail-profile-icon {
+        width: 28px; /* Smaller profile icon */
+        height: 28px;
+    }
+
+    /* Content Area Adjustments */
+    .gmail-content {
+        margin-left: 80px; /* Adjust for narrower sidebar */
+        padding: 60px 20px 20px 20px; /* Less padding on small screens */
+    }
+
+    .gmail-email-header h2 {
+        font-size: 18px; /* Smaller header text */
+    }
+
+    .gmail-email-sender, .gmail-recipient, .gmail-email-date {
+        font-size: 12px; /* Smaller font for sender and recipient info */
+    }
+
+    .gmail-body {
+        padding: 15px 0; /* Adjust body padding */
+        font-size: 14px; /* Smaller font size for email content */
+    }
+
+    /* Minimize the sidebar */
+    .gmail-sidebar {
+      width: 60px; /* Narrow sidebar */
+      padding: 10px; /* Adjust padding */
+    }
+
+    /* Only display icons, hide text */
+    .gmail-sidebar ul li a {
+        display: flex;
+        flex-direction: column; /* Stack icon above hidden text */
+        align-items: center;
+        font-size: 0; /* Hide the text */
+    }
+
+    /* Ensure icons stay visible */
+    .gmail-sidebar ul li a i {
+        font-size: 20px; /* Adjust icon size for smaller sidebar */
+        color: #5f6368;
+        margin: 0; /* Remove spacing */
+    }
+    /* Adjust reply buttons at the bottom */
+    .gmail-reply-options button {
+      padding: 4px 8px; /* Smaller padding */
+      font-size: 12px; /* Smaller font size */
+    }
+
+    /* Icon adjustments within buttons */
+    .gmail-reply-options button i {
+      font-size: 14px; /* Adjust icon size */
+    }
+}
+
+/* 
+making the body fit to small screen
+*/
+/* Responsive styles for small screens */
+@media (max-width: 768px) {
+    /* Top Bar Adjustments */
+    .gmail-top-bar {
+        padding: 8px 10px; /* Reduce padding */
+        font-size: 14px; /* Reduce font size */
+    }
+
+    .gmail-logo-icon {
+        width: 24px; /* Smaller logo icon */
+        height: 24px;
+    }
+
+    .gmail-search-bar {
+        width: 70%; /* Adjust search bar width */
+        padding: 6px; /* Smaller padding */
+    }
+
+    .gmail-profile-icon {
+        width: 28px; /* Smaller profile icon */
+        height: 28px;
+    }
+
+    /* Content Area Adjustments */
+    .gmail-content {
+        margin-left: 80px; /* Adjust for narrower sidebar */
+        padding: 60px 20px 20px 20px; /* Less padding on small screens */
+    }
+
+    .gmail-email-header h2 {
+        font-size: 18px; /* Smaller header text */
+    }
+
+    .gmail-email-sender, .gmail-recipient, .gmail-email-date {
+        font-size: 12px; /* Smaller font for sender and recipient info */
+    }
+
+    .gmail-body {
+        padding: 15px 0; /* Adjust body padding */
+        font-size: 14px; /* Smaller font size for email content */
+    }
+
+    /* Minimize the sidebar */
+    .gmail-sidebar {
+      width: 60px; /* Narrow sidebar */
+      padding: 10px; /* Adjust padding */
+    }
+
+    /* Only display icons, hide text */
+    .gmail-sidebar ul li a {
+        display: flex;
+        flex-direction: column; /* Stack icon above hidden text */
+        align-items: center;
+        font-size: 0; /* Hide the text */
+    }
+
+    /* Ensure icons stay visible */
+    .gmail-sidebar ul li a i {
+        font-size: 20px; /* Adjust icon size for smaller sidebar */
+        color: #5f6368;
+        margin: 0; /* Remove spacing */
+    }
+    /* Adjust reply buttons at the bottom */
+    .gmail-reply-options button {
+      padding: 4px 8px; /* Smaller padding */
+      font-size: 12px; /* Smaller font size */
+    }
+
+    /* Icon adjustments within buttons */
+    .gmail-reply-options button i {
+      font-size: 14px; /* Adjust icon size */
+    }
 }
 
 /* end */
-#end-session-btn {
-  z-index: 3; /* Make sure it's on top of everything else */
-  margin-top: -1em
+/* General styling for the Chatbot Section */
+#chatbot-section .container {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 20px; /* Increased padding for a larger screen */
+  background-color: #4e919c;
+  margin: 0 auto;
+  max-width: 70%; /* Centered and width-adjusted for larger screens */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+/* Paragraph Styling */
+#chatbot-section .container p {
+  font-family: Arial, sans-serif;
+  color: white;
+  font-size: 16px;
+  width: 100%;
+  text-align: center;
+}
+
+/* End Session Button */
+/* General styling for the Chatbot Section */
+#chatbot-section .container {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 20px; /* Increased padding for a larger screen */
+  background-color: #4e919c;
+  margin: 0 auto;
+  max-width: 70%; /* Centered and width-adjusted for larger screens */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Paragraph Styling */
+#chatbot-section .container p {
+  font-family: Arial, sans-serif;
+  color: white;
+  font-size: 16px;
+  width: 100%;
+  text-align: center;
+}
+
+/* End Session Button */
+#end-session-btn {
+  position: fixed;
+  top: 10px;
+  left: 5px;
+  z-index: 3;
+  background-color: #06740e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Timer Styling */
+#timer {
+  position: fixed;
+  top: 10px;
+  right: 5px;
+  font-weight: bold;
+  background-color: black;
+  font-size: 1rem;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 8px;
+}
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  /* Container adjustments for smaller screens */
+  #chatbot-section .container {
+    padding: 6px; /* Slightly reduce padding */
+    max-width: 70%; /* Expand width */
+  }
+
+  /* End Session Button with 'End' label */
+  #end-session-btn {
+    font-size: 0.9rem; /* Slightly reduce font size */
+    padding: 2px 6px; /* Smaller padding */
+    width: 50px; /* Fixed width to fit 'End' text */
+
+  }
+
+  /* Timer Styling adjustments */
+  #timer {
+    font-size: 0.9rem; /* Slightly reduce font size */
+    padding: 2px 6px; /* Adjust padding for better fit */
+    right: 10px; /* Align equal to the 'End' button on the left side */
+
+  }
+}
+
+/* 
+.session-info {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+} */
