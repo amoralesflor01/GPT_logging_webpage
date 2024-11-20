@@ -77,23 +77,23 @@ def save_used_ids(used_ids):
 
 
 # Function to initialize user directory and files
-def initialize_user_data(user_id):
-    # Ensure the user_id is always treated as a string
-    user_id_str = str(user_id).zfill(5)
+# def initialize_user_data(user_id):
+#     # Ensure the user_id is always treated as a string
+#     user_id_str = str(user_id).zfill(5)
     
-    # Create user directory within the logs directory
-    user_dir = os.path.join(cwd, 'logs', f'user_{user_id_str}')
-    os.makedirs(user_dir, exist_ok=True)
+#     # Create user directory within the logs directory
+#     user_dir = os.path.join(cwd, 'logs', f'user_{user_id_str}')
+#     os.makedirs(user_dir, exist_ok=True)
     
-    # Define the CSV file path
-    csv_file = os.path.join(user_dir, f'user_{user_id_str}.csv')
+#     # Define the CSV file path
+#     csv_file = os.path.join(user_dir, f'user_{user_id_str}.csv')
     
-    # Initialize CSV file with headers
-    with open(csv_file, 'w', newline='') as f:
-        writer = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC)  # Ensure all data is quoted
-        writer.writerow(['User ID', 'User Prompt', 'GPT Chatbot', 'Email Subject', 'Email Content', 'Dataset', 'Type'])
+#     # Initialize CSV file with headers
+#     with open(csv_file, 'w', newline='') as f:
+#         writer = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC)  # Ensure all data is quoted
+#         writer.writerow(['User ID', 'User Prompt', 'GPT Chatbot', 'Email Subject', 'Email Content', 'Dataset', 'Type'])
     
-    return user_dir, csv_file
+#     return user_dir, csv_file
 
 
 # A timer check helper function
@@ -158,6 +158,7 @@ def login():
             # Check if the timer is running; if not, start it
             # if not existing_user.timer_is_running:
             #     start_time = svc.start_timer_by_User(existing_user)
+            # TODO : sus check it out
             start_time = existing_user.start_time
             if start_time.tzinfo is None:
                 start_time = start_time.replace(tzinfo=datetime.timezone.utc)
@@ -177,11 +178,17 @@ def login():
             # Store the valid user ID in the session and initialize their data
             session['user_id'] = user_id
             session["email_id"] = existing_user.email_id
-            session['user_dir'], session['csv_file'] = initialize_user_data(user_id)   # returns paths 
+
+            # session['user_dir'], session['csv_file'] = initialize_user_data(user_id)   # returns paths 
             # session['start_time'] = start_time  # Initialize start time when session begins
             session['chat_history'] = []  # Initialize chat history in session
             # TODO Known ISSUE new device would again activate login function, making all the session variables blank. Need to use DB to make it consistent!
             # TODO Can drop json and csv file. No longer needed.
+
+            session["consent"] = False
+            session["pre_survey"] = False
+            session["instructions"] = False
+            session["start_timer"] = False
             
             # Redirect to the chatbot page
             return redirect(url_for('consent'))
@@ -256,8 +263,10 @@ def get_response(userText):
 @application.route("/chatbot")
 def chatbot():
     # Ensure user is logged in and has a valid session token
-    if 'user_id' not in session or 'session_token' not in session:
-        return redirect(url_for('login'))
+    check_return_status = check_user_status(current_page="chatbot")
+    if check_return_status != 0:
+        return check_return_status
+    
 
     # Checking if the session has expired
     timeout_redirect = session_timeout()
@@ -369,43 +378,13 @@ def save_user_session_data():
             print(f"Failed to create JSON file: {e}")
 
 
-# Function that will end the session for the user, either button was pressed or 
-# time is over.
-# @application.route("/end-session")
-# def end_session():
-#     user_id = session.get('user_id')
-
-#     if user_id:
-#         # Save user session data
-#         save_user_session_data()
-        
-#         # Fetch the user record
-#         user = svc.find_account_by_user_id(user_id)
-#         if user:
-#             if not user.survey_completed:
-#                 user.timer_is_running = False  # Stop the timer
-#                 user.save()
-
-#         # Store user_id temporarily to link with survey
-#         session['temp_user_id'] = user_id
-
-#     # Clear the session except for temp_user_id
-#     temp_user_id = session.get('temp_user_id')
-#     temp_email_id = session.get("email_id")
-#     session.clear()
-#     session['temp_user_id'] = temp_user_id
-#     session["temp_email_id"] = temp_email_id
-
-#     # Redirect to survey page
-#     return redirect(url_for('survey', user_id=temp_user_id))
-
 @application.route("/end-session")
 def end_session():
     user_id = session.get('user_id')
 
     if user_id:
         # Save user session data
-        save_user_session_data()
+        # save_user_session_data()
         
         # Fetch the user record
         user = svc.find_account_by_user_id(user_id)
@@ -429,59 +408,6 @@ def end_session():
 
 
 
-
-# @application.route("/survey", methods=['GET', 'POST'])
-# def survey():
-#     user_id = session.get('temp_user_id') or request.args.get('user_id')
-
-#     if not user_id:
-#         flash("Session has expired. Please log in again.")
-#         return redirect(url_for('login'))
-
-#     if request.method == 'POST':
-#         # Retrieve survey responses and handle multiple selections
-#         survey_responses = {
-#             key: ", ".join(request.form.getlist(key)) if len(request.form.getlist(key)) > 1 else request.form[key]
-#             for key in request.form.keys()
-#         }
-
-#         # Retrieve survey responses from the form
-#         #survey_response = request.form.to_dict()
-#         # Collect multiple checkbox values for 'user-email-action' field
-#         #survey_response['user-email-action'] = request.form.getlist('user-email-action')
-        
-#         #survey_response['features'] = request.form.getlist('features')
-
-#         # Find the user and update survey responses
-#         user = svc.find_account_by_user_id(user_id)
-#         if user:
-#             user.survey_responses = survey_responses
-#             user.survey_completed = True  # Mark survey as completed
-#             user.timer_is_running = False  # Ensure the timer is stopped
-#             user.save()
-
-#         flash("Survey responses saved successfully. Session ended.")
-#         session.clear()  # Clear the session fully after survey is completed
-
-#         # Render a template with a redirect script
-#         return render_template("redirect_after_submit.html", redirect_url="https://docs.google.com/document/d/1dqDm4nkdzaRoT9GOtNfQEzQODbYUvxOMkugTin3n48c/edit?tab=t.0")
-
-#         #return redirect(url_for('login'))
-
-#     # Fetch email to display
-#     email = svc.getEmailRecordByUuid(session["temp_email_id"])
-#     email_sender = email["From"].values[0]
-#     email_subject = email["Subject"].values[0]
-#     email_content = email["Email Content"].values[0]
-
-
-#     return render_template(
-#         'survey.html', 
-#         email_sender=email_sender,
-#         email_subject=email_subject,
-#         email_content=email_content,
-#         user_id_int=int(user_id)
-#     )
 
 @application.route("/survey", methods=['GET', 'POST'])
 def survey():
@@ -529,27 +455,71 @@ def survey():
 
 @application.route("/consent", methods=['GET', 'POST'])
 def consent():
-    if 'user_id' not in session:
-        return redirect(url_for('login'))  # Ensure the user is logged in
+    check_return_status = check_user_status(current_page="consent")
+    if check_return_status != 0:
+        return check_return_status
+    
+    if session["consent"]:   # if already given consent, redirect to presurvey
+        return redirect(url_for('pre_survey'))
     
     if request.method == 'POST':
-        consent_given = request.form.get('consent')
+        # consent_given = request.form.get('consent')
         
-        if consent_given != 'yes':
-            flash("You must give consent to proceed.")
-            return redirect(url_for('consent'))
+        # if consent_given != 'yes':
+        #     flash("You must give consent to proceed.")
+        #     return redirect(url_for('consent'))
         
         # Proceed to pre-survey after consent is given
+        session["consent"] = True
         return redirect(url_for('pre_survey'))
 
     return render_template('consent.html')  # Ensure you create this template
 
 
+def check_user_status(current_page = ""):
+    # login page and default
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    # reached consent
+    if current_page == "consent":
+        return 0
+    print("HELLO")
+    print(session["consent"])
+    if not session["consent"]:
+        return redirect(url_for('consent'))
+    
+    # reached pre_survey
+    if current_page == "pre_survey":
+        return 0
+    if not session["pre_survey"]:
+        return redirect(url_for('pre_survey'))
+    
+    # reached instructions
+    if current_page == "instructions":
+        return 0
+    if not session["instructions"]:
+        return redirect(url_for('instructions'))
+    
+    # reached start timer
+    if current_page == "start_timer":
+        return 0
+    if not session["start_timer"]:
+        return redirect(url_for('start_timer'))
+
+    return 0    # default
+    
+    
+
 
 @application.route("/pre-survey", methods=['GET', 'POST'])
 def pre_survey():
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
+    check_return_status = check_user_status("pre_survey") # check for missing user statuses
+    if check_return_status != 0:
+        return check_return_status
+
+    if session["pre_survey"]:   # if already given consent, redirect to presurvey
+        return redirect(url_for('instructions'))
 
     if request.method == 'POST':
         # Save pre-survey responses to DB
@@ -567,6 +537,8 @@ def pre_survey():
         
         # Save pre-survey responses in the user's document
         svc.store_survey_response(session['user_id'], pre_survey_responses, is_pre_survey=True)
+
+        session["pre_survey"] = True
         
         # Redirect to instructions page
         return redirect(url_for('instructions'))
@@ -575,21 +547,49 @@ def pre_survey():
 
 
 
-@application.route("/instructions", methods=['GET'])
+@application.route("/instructions", methods=['GET', 'POST'])
 def instructions():
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
+    check_return_status = check_user_status("instructions")
+    if check_return_status != 0:
+        return check_return_status
+
+    if session["instructions"]:
+        return redirect(url_for('start_timer'))
+
+    if request.method == 'POST':
+        # consent_given = request.form.get('consent')
+        
+        # if consent_given != 'yes':
+        #     flash("You must give consent to proceed.")
+        #     return redirect(url_for('consent'))
+        
+        # Proceed to pre-survey after consent is given
+        session["instructions"] = True
+        return redirect(url_for('start_timer'))
+    
+
+    # next button in the template
+    # redirects to url_for("start_timer")
+    # should be here but whatev
     return render_template('instructions.html', user_id = int(session['user_id']))
 
 
 
-@application.route("/start-timer", methods=['POST'])
+@application.route("/start-timer", methods=['GET', 'POST'])
 def start_timer():
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
+    # Starts the timer on the backend and redirects you to chatbot.
+    check_return_status = check_user_status("start_timer")
+    if check_return_status != 0:
+        return check_return_status
+
+    if session["start_timer"]:
+        return redirect(url_for('chatbot'))
 
     # Start the timer only when the "Next" button is clicked on the instructions page
-    svc.start_timer_by_User(svc.find_account_by_user_id(session['user_id']))
+    if not session["start_timer"]:
+        svc.start_timer_by_User(svc.find_account_by_user_id(session['user_id']))
+
+    session["start_timer"] = True
 
     # Redirect to chatbot
     return redirect(url_for('chatbot'))
