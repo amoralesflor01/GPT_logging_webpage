@@ -47,14 +47,7 @@ role = 'Helpful Chatbot'
 # Define the impersonated role with instructions @girma_terfa
 impersonated_role = f"""
     From now on, you are going to act as {name}. Your role is {role}."""
-# """
-#     You are an AI model specialized in detecting spam emails.
-#     You must help users identify if an email is spam or not.
-#     You will help the user identify potential red flags and help them determine if the email may or may not be spam based on suspicious characteristics.
-#     You will also explain to the user why you think something may or may not be spam so they are not tricked into being scammed.
-#     Elaborate with details on why you think so based on evidence and common tactics used by spammers.
-#     You should help them be safe, but conversly if an email seems legitmate you should inform them why you think so.
-# """
+
 
 initial_message = 'Hello, I am a ChatBot. I am designed to help you with identifying spam emails. Please feel free to ask me anything! Your UserID is '
 
@@ -76,40 +69,6 @@ def save_used_ids(used_ids):
         json.dump(used_ids, f)
 
 
-# Function to initialize user directory and files
-# def initialize_user_data(user_id):
-#     # Ensure the user_id is always treated as a string
-#     user_id_str = str(user_id).zfill(5)
-    
-#     # Create user directory within the logs directory
-#     user_dir = os.path.join(cwd, 'logs', f'user_{user_id_str}')
-#     os.makedirs(user_dir, exist_ok=True)
-    
-#     # Define the CSV file path
-#     csv_file = os.path.join(user_dir, f'user_{user_id_str}.csv')
-    
-#     # Initialize CSV file with headers
-#     with open(csv_file, 'w', newline='') as f:
-#         writer = csv.writer(f, quoting=csv.QUOTE_NONNUMERIC)  # Ensure all data is quoted
-#         writer.writerow(['User ID', 'User Prompt', 'GPT Chatbot', 'Email Subject', 'Email Content', 'Dataset', 'Type'])
-    
-#     return user_dir, csv_file
-
-
-# A timer check helper function
-# def session_timeout():
-#     # Check if the session has a start time
-#     if 'start_time' in session:
-#         current_time = datetime.datetime.now(datetime.timezone.utc)
-#         start_time = session['start_time']
-        
-#         elapsed_time = math.floor((current_time - start_time).total_seconds())
-
-#         # If the timer limit has been exceeded, end the session and redirect
-#         if elapsed_time > TIMER_LIMIT:
-#             return redirect(url_for('end_session'))
-    
-#     return None
 
 # A timer check helper function
 def session_timeout():
@@ -123,7 +82,7 @@ def session_timeout():
         # If the timer limit has been exceeded, end the session and redirect
         if elapsed_time > TIMER_LIMIT:
             session['timeout_occurred'] = True
-            return redirect(url_for('end_session'))
+            return redirect(url_for('end_chat_session'))
     
     return None
 
@@ -189,6 +148,7 @@ def login():
             session["pre_survey"] = False
             session["instructions"] = False
             session["start_timer"] = False
+            session["chatbotDone"] = False
             
             # Redirect to the chatbot page
             return redirect(url_for('consent'))
@@ -267,6 +227,8 @@ def chatbot():
     if check_return_status != 0:
         return check_return_status
     
+    if session["chatbotDone"]:
+        redirect(url_for('survey'))
 
     # Checking if the session has expired
     timeout_redirect = session_timeout()
@@ -378,9 +340,11 @@ def save_user_session_data():
             print(f"Failed to create JSON file: {e}")
 
 
-@application.route("/end-session")
-def end_session():
+@application.route("/end-chat-session")
+def end_chat_session():
     user_id = session.get('user_id')
+
+    session["chatbotDone"] = True
 
     if user_id:
         # Save user session data
@@ -393,29 +357,20 @@ def end_session():
                 user.timer_is_running = False  # Stop the timer
                 user.save()
 
-        # Store user_id temporarily to link with survey
-        session['temp_user_id'] = user_id
-
-    # Clear the session except for temp_user_id
-    temp_user_id = session.get('temp_user_id')
-    temp_email_id = session.get("email_id")
-    session.clear()
-    session['temp_user_id'] = temp_user_id
-    session["temp_email_id"] = temp_email_id
-    # Redirect to survey page
-
-    return redirect(url_for('survey', user_id=temp_user_id))
+    # Redirect to post survey page
+    return redirect(url_for('survey'))
 
 
 
 
 @application.route("/survey", methods=['GET', 'POST'])
 def survey():
-    user_id = session.get('temp_user_id') or request.args.get('user_id')
+    user_id = session.get('user_id')
 
-    if not user_id:
-        flash("Session has expired. Please log in again.")
-        return redirect(url_for('login'))
+    check_return_status = check_user_status(current_page="post_survey")
+    if check_return_status != 0:
+        return check_return_status
+
 
     if request.method == 'POST':
         # Retrieve survey responses and handle multiple selections
@@ -439,7 +394,7 @@ def survey():
         return render_template("redirect_after_submit.html", redirect_url="https://docs.google.com/document/d/1dqDm4nkdzaRoT9GOtNfQEzQODbYUvxOMkugTin3n48c/edit?tab=t.0")
 
     # Fetch email to display in the survey page
-    email = svc.getEmailRecordByUuid(session["temp_email_id"])
+    email = svc.getEmailRecordByUuid(session["email_id"])
     email_sender = email["From"].values[0]
     email_subject = email["Subject"].values[0]
     email_content = email["Email Content"].values[0]
