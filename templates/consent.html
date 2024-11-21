@@ -92,13 +92,10 @@
         By clicking <strong>Next</strong>, you are indicating that you have read
         the consent form and wish to participate in this study.
       </div>
-      <button class="next-button" onclick="goToPreSurvey()">Next</button>
+      <form method="POST">
+        <button type="submit" class="next-button">Next</button>
+      </form>
     </div>
 
-    <script>
-      function goToPreSurvey() {
-        window.location.href = "/pre-survey"; //redirect
-      }
-    </script>
   </body>
 </html>

@@ -110,7 +110,7 @@
       alert("Chat Session has terminated. You will be proceeded to take the survey.");
 
       // Redirect to the session ending logic or login page
-      window.location.href = "/end-session"; // This should match the logic for session termination
+      window.location.href = "/end-chat-session"; // This should match the logic for session termination
     }
 
     //Search Bar
