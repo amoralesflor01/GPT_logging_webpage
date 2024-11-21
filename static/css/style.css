@@ -56,6 +56,7 @@ gap: 2rem;
   z-index: 100; /* Above the Gmail UI */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  pointer-events: auto; /* Keep interactions with the chatbot */
 }
 
 
@@ -597,6 +598,9 @@ text-align: center;
   padding: 80px 40px 40px 40px;
   position: relative;
   z-index: 1; /* Content should appear under the top bar and sidebar */
+  overflow-y: auto; /* Enable scrolling */
+  max-height: calc(100vh - 180px); /* Allow scrolling but stop above the chatbot */
+  padding-bottom: 180px; /* Add padding to prevent overlap with the chatbot */
 }
 
 .gmail-email-header h2 {
@@ -628,6 +632,7 @@ text-align: center;
   padding: 20px 0;
   color: #202124;
   line-height: 1.6;
+  margin-bottom: 180px; /* Push content up to make space for the chatbot */
 }
 
 .gmail-reply-options {
