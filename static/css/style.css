@@ -699,3 +699,11 @@ text-align: center;
   z-index: 3; /* Make sure it's on top of everything else */
   margin-top: -1em
 }
+
+/* General scaling for all pages */
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+  .chat_window {
+    width: 350px;
+    height: 400px;
+  }
+}
