@@ -1,5 +1,5 @@
 # Import necessary libraries
-from flask import Flask, render_template, request, redirect, session, url_for, flash
+from flask import Flask, render_template, request, redirect, session, url_for, flash, make_response
 from openai import OpenAI
 import os
 import time
@@ -9,6 +9,7 @@ import pandas as pd
 import random
 import atexit
 import secrets  # For generating a secure random key
+from functools import wraps
 import math
 import datetime
 import data_classes.mongo_setup as mongo_setup
@@ -86,78 +87,79 @@ def session_timeout():
     
     return None
 
+
+# a decorator or helper to enforce session validity for protected routes
+def login_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if 'user_id' not in session or 'session_token' not in session:
+            flash("You must log in first!")
+            return redirect(url_for('login'))
+        return func(*args, **kwargs)
+    return wrapper
     
 
 
 # Route for the login page
 @application.route("/", methods=['GET', 'POST'])
 def login():
-    # Check if already logged in, direct redirect
-    if 'user_id' in session or 'session_token' in session:
-        return redirect(url_for('chatbot'))
+    # Redirect already logged-in users
+    if 'user_id' in session and 'session_token' in session:
+        flash("You are already logged in!")
+        # Redirect to appropriate page based on session state
+        if session.get("consent") is False:
+            return redirect(url_for('consent'))
+        elif session.get("pre_survey") is False:
+            return redirect(url_for('pre_survey'))
+        elif session.get("instructions") is False:
+            return redirect(url_for('instructions'))
+        elif session.get("start_timer") is False:
+            return redirect(url_for('start_timer'))
+        else:
+            return redirect(url_for('chatbot'))
     
-
+    # Handle POST request (login form submission)
     if request.method == 'POST':
-        user_id = request.form.get('password')  # Get the user ID from the form (stored in the "password" field)
-
+        user_id = request.form.get('password')  # Get user ID from form input
         existing_user = svc.find_account_by_user_id(user_id)
-        if existing_user: # and user_id not in used_ids['used'] and user_id not in used_ids['in_use']:
-            # TODO Fix the mess of in_use, used, etc by the timer
-            # TODO Add some kind of disclaimer that once logged in, timer will start and not pause.
-            #       "Are you ready?" Kind of thing
 
-            
-            # Assuming, as soon as logged in, we start the timer (after disclaimer).
-            
-            # If survey is completed, the user should not be allowed to login again
+        if existing_user:
+            # Prevent login if the survey is completed
             if existing_user.survey_completed:
-                flash('Survey already completed. You cannot login again.')
+                flash("Survey already completed. You cannot log in again.")
                 return redirect(url_for('login'))
-            
-            # Check if the timer is running; if not, start it
-            # if not existing_user.timer_is_running:
-            #     start_time = svc.start_timer_by_User(existing_user)
-            # TODO : sus check it out
+
+            # Ensure consistent session start time (timezone-aware)
             start_time = existing_user.start_time
             if start_time.tzinfo is None:
                 start_time = start_time.replace(tzinfo=datetime.timezone.utc)
-                
-            
-            # If no conversation history, initiate with a welcome message
+
+            # Initialize conversation history if not already present
             if not existing_user.conversation_history:
                 svc.append_conversation(user_id, is_bot=True, content=initial_message + user_id)
-            
 
-            # Mark the user ID as "in use" immediately upon login
-            # mark_user_id_as_in_use(user_id)
-
-            # Generate a unique session token
+            # Generate a unique session token for this login
             session['session_token'] = secrets.token_hex(16)
-            
-            # Store the valid user ID in the session and initialize their data
             session['user_id'] = user_id
             session["email_id"] = existing_user.email_id
 
-            # session['user_dir'], session['csv_file'] = initialize_user_data(user_id)   # returns paths 
-            # session['start_time'] = start_time  # Initialize start time when session begins
-            session['chat_history'] = []  # Initialize chat history in session
-            # TODO Known ISSUE new device would again activate login function, making all the session variables blank. Need to use DB to make it consistent!
-            # TODO Can drop json and csv file. No longer needed.
-
+            # Initialize other session variables
             session["consent"] = False
             session["pre_survey"] = False
             session["instructions"] = False
             session["start_timer"] = False
             session["chatbotDone"] = False
-            
-            # Redirect to the chatbot page
+
+            # Redirect to the consent page
             return redirect(url_for('consent'))
         else:
-            # Invalid user ID or ID has already been used or is in use, show an error message
-            flash('Invalid, already used, or in-use User ID! Please try again.')
+            # Invalid login attempt
+            flash("Invalid User ID! Please try again.")
+            return redirect(url_for('login'))
 
-    # If GET request, just show the login page
+    # Handle GET request (display login form)
     return render_template('login.html')
+
 
 
 # Function to complete chat input using OpenAI's GPT-3.5 Turbo
@@ -221,7 +223,14 @@ def get_response(userText):
 
 # Modify the chatbot route to pass email data to the template
 @application.route("/chatbot")
+@login_required
 def chatbot():
+    
+    # Prevent users from accessing the chatbot route after the session is marked as done
+    if session.get("chatbotDone", False):
+        flash("You have completed your chatbot session and cannot return.")
+        return redirect(url_for('survey'))
+    
     # Ensure user is logged in and has a valid session token
     check_return_status = check_user_status(current_page="chatbot")
     if check_return_status != 0:
@@ -278,6 +287,7 @@ def chatbot():
 
 # Define the route for getting the chatbot's response
 @application.route("/get")
+@login_required
 def get_bot_response():
 
     # Checking if server logged out! (Due to tab sync issues) (Can't be fixed until UI timer and Python timer are exactly the same)
@@ -344,6 +354,7 @@ def save_user_session_data():
 
 
 @application.route("/end-chat-session")
+@login_required
 def end_chat_session():
     user_id = session.get('user_id')
 
@@ -367,8 +378,14 @@ def end_chat_session():
 
 
 @application.route("/survey", methods=['GET', 'POST'])
+@login_required
 def survey():
     user_id = session.get('user_id')
+    
+    # Check if the user has completed the survey
+    if session.get("chatbotDone", False) and svc.find_account_by_user_id(user_id).survey_completed:
+        flash("Survey already completed. Thank you!")
+        return render_template("thank_you.html")  # Redirect to a thank-you page
 
     check_return_status = check_user_status(current_page="post_survey")
     if check_return_status != 0:
@@ -412,6 +429,7 @@ def survey():
 
 
 @application.route("/consent", methods=['GET', 'POST'])
+@login_required
 def consent():
     check_return_status = check_user_status(current_page="consent")
     if check_return_status != 0:
@@ -471,6 +489,7 @@ def check_user_status(current_page = ""):
 
 
 @application.route("/pre-survey", methods=['GET', 'POST'])
+@login_required
 def pre_survey():
     check_return_status = check_user_status("pre_survey") # check for missing user statuses
     if check_return_status != 0:
@@ -506,6 +525,7 @@ def pre_survey():
 
 
 @application.route("/instructions", methods=['GET', 'POST'])
+@login_required
 def instructions():
     check_return_status = check_user_status("instructions")
     if check_return_status != 0:
@@ -534,6 +554,7 @@ def instructions():
 
 
 @application.route("/start-timer", methods=['GET', 'POST'])
+@login_required
 def start_timer():
     # Starts the timer on the backend and redirects you to chatbot.
     check_return_status = check_user_status("start_timer")
@@ -551,6 +572,15 @@ def start_timer():
 
     # Redirect to chatbot
     return redirect(url_for('chatbot'))
+
+
+# Applies no-cache headers to every route
+@application.after_request
+def add_no_cache_headers(response):
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "-1"
+    return response
 
 
 
