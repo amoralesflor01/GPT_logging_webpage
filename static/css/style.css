@@ -57,6 +57,7 @@ gap: 2rem;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   pointer-events: auto; /* Keep interactions with the chatbot */
+  transition: all 0.3s ease; /* Smooth transition for scaling */
 }
 
 
@@ -692,18 +693,90 @@ text-align: center;
     display: flex;
     gap: 10px;
     align-items: center;
+    z-index: 3; /* Ensure it stays on top */
 }
+
 
 /* end */
-#end-session-btn {
+/* #end-session-btn {
   z-index: 3; /* Make sure it's on top of everything else */
-  margin-top: -1em
+  /*margin-top: -1em
+/*}*/
+
+#end-session-btn {
+  z-index: 3; /* Ensure it's on top */
+  font-size: 1rem; /* Scale down font size */
+  padding: 8px; /* Adjust padding */
+  margin-top: 0; /* Prevent overlap with text */
 }
 
-/* General scaling for all pages */
-@media screen and (min-width: 768px) and (max-width: 1200px) {
+/* Responsive Design (Dynamic Scaling for All Screens) */
+@media screen and (max-width: 1280px) {
   .chat_window {
-    width: 350px;
-    height: 400px;
+    width: 350px; /* Adjust width */
+    height: 400px; /* Adjust height */
+    bottom: 5px; /* Reduce bottom margin */
+    right: 5px; /* Reduce right margin */
+  }
+
+  .gmail-content {
+    margin-left: 200px; /* Reduce left margin for sidebar */
+    padding: 60px 20px 20px 20px; /* Adjust padding */
+    max-height: calc(100vh - 160px); /* Ensure content is scrollable */
+    padding-bottom: 160px; /* Prevent overlap with chatbot */
+  }
+
+  .gmail-body {
+    font-size: 0.9rem; /* Slightly smaller font */
+    line-height: 1.4; /* Adjust spacing */
+    margin-bottom: 160px; /* Prevent overlap with chatbot */
+  }
+
+  #end-session-btn {
+    font-size: 0.9rem; /* Smaller font size for button */
+    padding: 6px; /* Adjust padding */
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .chat_window {
+    width: 300px; /* Narrower width */
+    height: 350px; /* Reduced height */
+  }
+
+  .gmail-content {
+    margin-left: 180px; /* Narrower left margin */
+    padding: 50px 15px 15px 15px; /* Compact padding */
+    max-height: calc(100vh - 140px); /* Ensure scrollable content */
+    padding-bottom: 140px; /* Prevent overlap */
+  }
+
+  .gmail-body {
+    font-size: 0.85rem; /* Smaller font */
+    line-height: 1.3; /* Compact spacing */
+    margin-bottom: 140px; /* Prevent overlap */
+  }
+
+  #end-session-btn {
+    font-size: 0.8rem; /* Smaller button font */
+    padding: 5px; /* Adjust padding */
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .chat_window {
+    display: none; /* Hide chatbot for very small screens */
+  }
+
+  .gmail-content {
+    margin-left: 0; /* Remove sidebar margin */
+    padding: 40px 10px; /* Compact padding */
+    max-height: calc(100vh - 100px); /* Ensure content is scrollable */
+    padding-bottom: 100px; /* Prevent overlap */
+  }
+
+  .gmail-body {
+    font-size: 0.8rem; /* Smaller font */
+    margin-bottom: 100px; /* Prevent overlap */
   }
 }
