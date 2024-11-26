@@ -1,3 +1,18 @@
+// To prevent navigation to cached pages using the back button
+window.history.pushState(null, "", window.location.href);
+window.onpopstate = function () {
+  window.history.pushState(null, "", window.location.href);
+};
+
+// To prevent back navigation on the survey page
+if (window.location.pathname.includes("survey")) {
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+        window.history.pushState(null, "", window.location.href);
+    };
+}
+
+
 (function () {
   var Message;
   // Constructor Function
@@ -107,17 +122,20 @@
     // Function to terminate the session
     function endSession() {
       // Show alert before session ends
-      alert("Chat Session has terminated. You will be proceeded to take the survey.");
+      alert(
+        "Chat Session has terminated. You will be proceeded to take the survey."
+      );
 
       // Redirect to the session ending logic or login page
       window.location.href = "/end-chat-session"; // This should match the logic for session termination
     }
 
     //Search Bar
-    document.querySelector('.gmail-search-bar').addEventListener('focus', function(event) {
-      event.preventDefault(); // Prevent focus
-    });
-    
+    document
+      .querySelector(".gmail-search-bar")
+      .addEventListener("focus", function (event) {
+        event.preventDefault(); // Prevent focus
+      });
 
     // Attach event listener to the "End Session" button
     document
