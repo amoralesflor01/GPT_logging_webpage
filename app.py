@@ -265,6 +265,9 @@ def chatbot():
     # Fetch email to display
     email = svc.getEmailRecordByUuid(session["email_id"])
 
+    # Debugging: Log the email assignment
+    print(f"User ID: {session['user_id']}, Email ID: {session['email_id']}")
+
     # For testing longer email text obstruction by chatbot box (DO NOT REMOVE)
     # email = svc.getEmailRecordByUuid("8e770999-7f81-4cb6-85ae-15cc2b2aaf2a")
 
