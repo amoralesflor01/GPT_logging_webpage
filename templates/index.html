@@ -29,7 +29,7 @@
         border-radius: 10px;
         padding: 10px;
         background-color: #4e919c;
-        margin: auto;">
+        margin: 0;">
       {% if user_id_int % 2 == 1 %}
       <p style="font-family: Arial; color: white; font-size: 15px">
         Please read the email provided carefully and use the chatbot to help you 
@@ -51,13 +51,11 @@
         <button id="end-session-btn" class="btn btn-success" onclick="endSession()">
             Proceed To Survey
         </button>
-        
-        {# Timer #}
-        <p id="timer" style="font-weight: bold; font-size: 2rem;">
-            {{TIMER_LIMIT|timer_format}}
-        </p>
-    
     </div>
+    {# Timer #}
+    <p id="timer" style="font-weight: bold; font-size: 2rem; position: absolute; bottom: 10px; left: 15px; z-index: 100">
+        {{TIMER_LIMIT|timer_format}}
+    </p>
      
     <!-- Add tab buttons @girma_terfa -->
      <!-- 

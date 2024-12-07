@@ -61,7 +61,6 @@ gap: 2rem;
 
 
 
-
 .top_menu {
 background-color: #4a8bad;
 width: 100%;
@@ -686,12 +685,14 @@ text-align: center;
 }
 
 .session-info {
-    position: absolute;
-    top: 10px;
+    position: fixed;
+    top: 15px;
     right: 10px;
     display: flex;
     gap: 10px;
     align-items: center;
+    flex-direction: column;
+    z-index: 5;
 }
 
 /* end */
