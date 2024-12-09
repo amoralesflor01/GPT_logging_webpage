@@ -699,3 +699,121 @@ text-align: center;
   z-index: 3; /* Make sure it's on top of everything else */
   margin-top: -1em
 }
+
+/* ********************************************** */
+
+/* Existing styles in your CSS file go here */
+
+/* Media Queries for Responsive Design */
+
+/* Adjustments for Medium Screens (1366px and smaller) */
+@media screen and (max-width: 1366px) {
+  /* Chat Window */
+  .chat_window {
+    width: 400px; /* Adjust width */
+    height: 450px; /* Adjust height */
+  }
+
+  /* Gmail Sidebar */
+  .gmail-sidebar {
+    width: 150px; /* Reduce width */
+  }
+
+  .gmail-content {
+    margin-left: 180px; /* Adjust margin */
+    padding: 60px 20px 20px 20px; /* Adjust padding */
+    overflow-y: auto; /* Allow scrolling */
+    max-height: calc(100vh - 420px); /* Allow space for the chatbot */
+    padding-bottom: 50px; /* Prevent overlap */
+  }
+  
+  /* Gmail Email Header */
+  .gmail-email-header h2 {
+    font-size: 18px; /* Reduce font size */
+  }
+
+  /* Gmail Body */
+  .gmail-body {
+    font-size: 14px; /* Reduce font size */
+    padding: 15px 0; /* Adjust padding */
+    margin-bottom: 120px; /* Prevent overlap with the chatbot */
+  }
+
+  /* Session Info (Timer and Button) */
+  .session-info {
+    top: 5px; /* Adjust spacing from top */
+    right: 5px; /* Adjust spacing from right */
+    flex-direction: column; /* Stack timer and button vertically */
+    align-items: flex-end; /* Align items to the right */
+  }
+
+  #end-session-btn {
+    font-size: 12px; /* Smaller button text */
+    padding: 8px 12px; /* Reduce padding */
+  }
+
+  #timer {
+    font-size: 1.5rem; /* Smaller timer */
+  }
+}
+
+/* Adjustments for Small Screens (1024px and smaller) */
+@media screen and (max-width: 1024px) {
+  /* Chat Window */
+  .chat_window {
+    width: 350px; /* Narrower chat window */
+    height: 400px; /* Shorter height */
+    bottom: 5px; /* Reduce spacing from the bottom */
+    right: 5px; /* Reduce spacing from the right */
+  }
+
+  /* Gmail Sidebar */
+  .gmail-sidebar {
+    width: 120px; /* Narrow sidebar */
+    font-size: 12px; /* Smaller text */
+  }
+
+  /* Gmail Content */
+  .gmail-content {
+    margin-left: 140px; /* Adjust margin */
+    padding: 40px 15px 15px 15px; /* Reduce padding */
+    overflow-y: auto; /* Allow scrolling if needed */
+    max-height: calc(100vh - 450px); /* Ensure scrolling stops above the chatbot */
+    padding-bottom: 60px; /* Add space at the bottom */
+  }
+
+  /* Gmail Body */
+  .gmail-body {
+    font-size: 12px; /* Smaller text */
+    padding: 10px 0; /* Adjust padding */
+    margin-bottom: 100px; /* Push the text up to avoid overlap with the chatbot */
+  }
+
+  /* Gmail Email Header */
+  .gmail-email-header h2 {
+    font-size: 16px; /* Smaller font size */
+  }
+
+  /* Gmail Top Bar */
+  .gmail-top-bar {
+    font-size: 12px; /* Smaller font */
+    padding: 8px 15px; /* Adjust padding */
+  }
+
+  /* Session Info */
+  .session-info {
+    top: 5px;
+    right: 5px;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  #end-session-btn {
+    font-size: 10px; /* Smaller button text */
+    padding: 6px 10px; /* Adjust padding */
+  }
+
+  #timer {
+    font-size: 1.2rem; /* Smaller timer */
+  }
+}
