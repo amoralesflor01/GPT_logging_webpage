@@ -7,5 +7,4 @@ myenv
 .venv
 __pycache__
 .DS_Store
-*.ipynb
 *.pem
