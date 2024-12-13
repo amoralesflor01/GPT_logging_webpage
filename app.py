@@ -286,7 +286,6 @@ def chatbot():
         convo_history=existing_user.conversation_history
     )
 
-#######################################################
 
 # Define the route for getting the chatbot's response
 @application.route("/get")
@@ -487,8 +486,6 @@ def check_user_status(current_page = ""):
         return redirect(url_for('start_timer'))
 
     return 0    # default
-    
-    
 
 
 @application.route("/pre-survey", methods=['GET', 'POST'])
@@ -524,7 +521,6 @@ def pre_survey():
         return redirect(url_for('instructions'))
 
     return render_template('pre_survey.html', user_id = int(session['user_id']))
-
 
 
 @application.route("/instructions", methods=['GET', 'POST'])
@@ -584,7 +580,6 @@ def add_no_cache_headers(response):
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "-1"
     return response
-
 
 
 # Register the save_user_session_data function to be called when the program exits
