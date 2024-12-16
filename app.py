@@ -413,7 +413,7 @@ def survey():
         session.clear()  # Clear the session fully after survey is completed
 
         # Redirect to the thank-you page or external link
-        return render_template("redirect_after_submit.html", redirect_url="https://docs.google.com/document/d/1dqDm4nkdzaRoT9GOtNfQEzQODbYUvxOMkugTin3n48c/edit?tab=t.0")
+        return render_template("redirect_after_submit.html", redirect_url="https://app.prolific.com/submissions/complete?cc=C1NOLJRJ")
 
     # Fetch email to display in the survey page
     email = svc.getEmailRecordByUuid(session["email_id"])
