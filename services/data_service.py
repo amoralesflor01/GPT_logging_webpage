@@ -4,13 +4,50 @@ from data_classes.survey import SurveyResponse
 import datetime
 import pandas as pd
 import numpy as np
+from collections import defaultdict
 
-# Global tracker for email assignments
-email_tracker = {
-    "used_emails": set(),  # Keep track of emails that have been assigned to valid pairs
-    "current_email": None,  # Current email being used
-    "assigned_groups": {"experimental": None, "control": None},  # Track assigned groups
-}
+# Global dictionary to track email usage counts
+email_usage_counter = defaultdict(int)
+email_list = []  # Holds the list of all emails
+
+def loadEmails():
+    """Load and process emails into a list for balanced assignment."""
+    global email_list
+    df = pd.read_csv("emails/dataset.csv")
+    class_0 = df[df['Classification'] == 0]
+    class_1 = df[df['Classification'] == 1]
+
+    # Equalize proportions
+    min_count = min(len(class_0), len(class_1))
+    sample_0 = class_0.sample(n=min_count, random_state=42)
+    sample_1 = class_1.sample(n=min_count, random_state=42)
+    balanced_sample = pd.concat([sample_0, sample_1])
+
+    # Shuffle and extract UniqueIDs
+    email_list = balanced_sample["UniqueID"].tolist()
+
+def pickBalancedEmailUuid() -> str:
+    """Pick an email with the least usage count to ensure balance."""
+    global email_usage_counter, email_list
+
+    # If email list is empty, reload
+    if not email_list:
+        loadEmails()
+
+    # Sort emails by their usage count and select the least used one
+    least_used_email = sorted(email_list, key=lambda email: email_usage_counter[email])[0]
+
+    # Increment its usage count
+    email_usage_counter[least_used_email] += 1
+    return least_used_email
+
+
+# # Global tracker for email assignments
+# email_tracker = {
+#     "used_emails": set(),  # Keep track of emails that have been assigned to valid pairs
+#     "current_email": None,  # Current email being used
+#     "assigned_groups": {"experimental": None, "control": None},  # Track assigned groups
+# }
 
 def create_account_with_email(user_id: str, email_id: str) -> User:
     user = User()
@@ -21,42 +58,42 @@ def create_account_with_email(user_id: str, email_id: str) -> User:
     return user
 
 
-def pickRandomEmailUuid() -> str:
-    global email_tracker
+# def pickRandomEmailUuid() -> str:
+#     global email_tracker
 
-    # Read and process the emails
-    df = pd.read_csv("emails/merged_emails.csv")
-    # Separate the rows based on classification
-    class_0 = df[df['Classification'] == 0]
-    class_1 = df[df['Classification'] == 1]
+#     # Read and process the emails
+#     df = pd.read_csv("emails/dataset.csv")
+#     # Separate the rows based on classification
+#     class_0 = df[df['Classification'] == 0]
+#     class_1 = df[df['Classification'] == 1]
 
-    # Calculate the minimum count between the two classes
-    min_count = min(len(class_0), len(class_1))
+#     # Calculate the minimum count between the two classes
+#     min_count = min(len(class_0), len(class_1))
 
-    # Randomly sample 'min_count' entries from both classes to get equal proportions
-    sample_0 = class_0.sample(n=min_count, random_state=np.random.randint(1000))
-    sample_1 = class_1.sample(n=min_count, random_state=np.random.randint(1000))
+#     # Randomly sample 'min_count' entries from both classes to get equal proportions
+#     sample_0 = class_0.sample(n=min_count, random_state=np.random.randint(1000))
+#     sample_1 = class_1.sample(n=min_count, random_state=np.random.randint(1000))
 
-    # Combine the samples
-    balanced_sample = pd.concat([sample_0, sample_1])
-    balanced_sample = balanced_sample.sample(frac=1, random_state=np.random.randint(1000)).reset_index(drop=True)
+#     # Combine the samples
+#     balanced_sample = pd.concat([sample_0, sample_1])
+#     balanced_sample = balanced_sample.sample(frac=1, random_state=np.random.randint(1000)).reset_index(drop=True)
 
-    # Log the size of the balanced sample
-    print(f"Balanced sample size: {len(balanced_sample)}")
+#     # Log the size of the balanced sample
+#     print(f"Balanced sample size: {len(balanced_sample)}")
 
-    # Loop until an unused email is found
-    while True:
-        random_row = balanced_sample.sample(n=1, random_state=np.random.randint(1000))
-        random_email = random_row["UniqueID"].values[0]
+#     # Loop until an unused email is found
+#     while True:
+#         random_row = balanced_sample.sample(n=1, random_state=np.random.randint(1000))
+#         random_email = random_row["UniqueID"].values[0]
 
-        # Log each email selection attempt
-        print(f"Attempting to use email: {random_email}")
-        if random_email not in email_tracker["used_emails"]:
-            email_tracker["current_email"] = random_email
-            email_tracker["assigned_groups"] = {"experimental": False, "control": False}
-            print(f"Selected new email: {random_email}")
-            break
-    return email_tracker["current_email"]
+#         # Log each email selection attempt
+#         print(f"Attempting to use email: {random_email}")
+#         if random_email not in email_tracker["used_emails"]:
+#             email_tracker["current_email"] = random_email
+#             email_tracker["assigned_groups"] = {"experimental": False, "control": False}
+#             print(f"Selected new email: {random_email}")
+#             break
+#     return email_tracker["current_email"]
 
 
 def create_account(user_id: str) -> User:

@@ -2,7 +2,7 @@ import services.data_service as svc
 
 # user_ids = ['24080', '12442', '23492', '66612', '10800', '19237', '95123', '81739', '46791', '68315']
 
-user_ids = ['65909', '94687', '56899', '39932', '25307', '81215', '53348', '10225', '67484', '63493', '48693', '61100', '52730', '84684', '85989', '12676', '97806', '15741', '53508', '60636']
+user_ids = ['7926068', '4974123', '6759496', '8483881', '1448006', '1245123', '6008293', '5818218', '6740057', '8887228']
 
 def run_create_accounts():
     # Separate users into experimental and control groups
@@ -15,20 +15,18 @@ def run_create_accounts():
 
     # Pair users and assign emails
     for exp_user, ctrl_user in zip(experimental_users, control_users):
-        # Check if experimental user already exists
+        # Fetch the next balanced email for the pair
+        current_email = svc.pickBalancedEmailUuid()
+        print(f"Selected email {current_email} for pair ({exp_user}, {ctrl_user})")
+
+        # Check and create experimental user
         existing_exp_user = svc.find_account_by_user_id(exp_user)
         if not existing_exp_user:
-            # Fetch the next email for the pair
-            current_email = svc.pickRandomEmailUuid()
-            print(f"Selected email {current_email} for pair ({exp_user}, {ctrl_user})")
-
-            # Assign the email to the experimental user
             print(f"Creating account for experimental user {exp_user}")
             svc.create_account_with_email(exp_user, current_email)
 
-        # Check if control user already exists
+        # Check and create control user
         existing_ctrl_user = svc.find_account_by_user_id(ctrl_user)
         if not existing_ctrl_user:
-            # Assign the same email to the control user
             print(f"Creating account for control user {ctrl_user}")
             svc.create_account_with_email(ctrl_user, current_email)
