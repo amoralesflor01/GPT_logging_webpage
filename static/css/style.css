@@ -870,3 +870,15 @@ text-align: center;
     font-size: 12px;
   }
 }
+/* BUTTONS ON POST SURVEY */
+.switch_tabs {
+  margin: 0 auto; /* Center horizontally */
+  text-align: center; /* Align buttons centrally */
+  background-color: #fff; /* Match background */
+  padding: 10px 0;
+  position: relative; /* Ensure it remains part of the flow */
+  width: 100%;
+  max-width: 600px; /* Adjust to match the survey_div width */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+  border-radius: 8px; /* Optional rounded corners */
+}
