@@ -122,9 +122,9 @@ if (window.location.pathname.includes("survey")) {
     // Function to terminate the session
     function endSession() {
       // Show alert before session ends
-      alert(
-        "Chat Session has terminated. You will be proceeded to take the survey."
-      );
+      // alert(
+      //   "Chat Session has terminated. You will be proceeded to take the survey."
+      // );
 
       // Redirect to the session ending logic or login page
       window.location.href = "/end-chat-session"; // This should match the logic for session termination

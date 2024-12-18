@@ -79,71 +79,47 @@
             padding: 8px;
             border: 1px solid #ddd;
         }
+        .error-message {
+            display: none; /* Hide the error message by default */
+            color: red; /* Optional: Change color for emphasis */
+            font-size: 14px;
+            margin-top: 5px;
+        }        
     </style>
+    <script>
+        function validateForm() {
+            // Get all checkboxes in the multiple-choice group
+            const checkboxes = document.querySelectorAll('input[name="computer-literacy"]');
+            const errorMessage = document.getElementById('checkbox-error');
+        
+            // Check if at least one checkbox is checked
+            const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+        
+            if (!isChecked) {
+                // Show error message
+                errorMessage.style.display = 'block';
+                return false; // Prevent form submission
+            } else {
+                // Hide error message if validation passes
+                errorMessage.style.display = 'none';
+                return true; // Allow form submission
+            }
+        } 
+    </script>
 </head>
 <body>
     <div class="container">
         <h1>Pre-Survey</h1>
+        <form method="POST" action="/pre-survey" onsubmit="return validateForm()">
         {% if user_id % 2 == 1 %}
 
             <!-- EXPERIMENT - CHATBOT -->
 
-            <form method="POST" action="/pre-survey">
-
-                <!-- Open-Ended Question -->
-                <div class="open-ended-group">
-                    <p><strong>1. Which email provider do you use?</strong></p>
-                    <textarea name="email-provider" rows="4" placeholder="Enter your response here..."></textarea>
-                </div>
-
-                <!-- Single Choice Question -->
-                <div class="single-choice-group">
-                    <p><strong>2. How often do you use your email?</strong></p>
-                    <label><input type="radio" name="email-use-frequency" value="daily" required> Daily</label><br>
-                    <label><input type="radio" name="email-use-frequency" value="weekly"> Weekly</label><br>
-                    <label><input type="radio" name="email-use-frequency" value="monthly"> Monthly</label>
-                </div>
-
-                <!-- Single Choice Question -->
-                <div class="single-choice-group">
-                    <p><strong>3. Have you ever interacted with ChatGPT?</strong></p>
-                    <label><input type="radio" name="GPT-interaction" value="yes" required> yes</label><br>
-                    <label><input type="radio" name="GPT-interaction" value="no"> no</label><br>
-                    <label><input type="radio" name="GPT-interaction" value="idk"> I am not sure</label>
-                </div>
-
-                <!-- Single Choice Question -->
-                <div class="single-choice-group">
-                    <p><strong>4. Have you ever interacted with chatbot in general?</strong></p>
-                    <label><input type="radio" name="BOT-interaction" value="yes" required> yes</label><br>
-                    <label><input type="radio" name="BOT-interaction" value="no"> no</label><br>
-                    <label><input type="radio" name="BOT-interaction" value="idk"> I am not sure</label>
-                </div>
-
-                <!-- Multiple Choice Question -->
-                <div class="multiple-choice-group">
-                    <p><strong>5. Email and computer literacy (Select all that apply)</strong></p>
-                    <label><input type="checkbox" name="computer-literacy" value="file_attatchment_NO"> I do not feel confident attaching a file to an email</label><br>
-                    <label><input type="checkbox" name="computer-literacy" value="identify_sender_YES"> I know how to determine who sent me an email</label><br>
-                    <label><input type="checkbox" name="computer-literacy" value="identify_spam_YES"> I am confident in my ability to determine whether an email is spam without assistance</label>
-                </div>
-
-                <!-- Submit Button -->
-                <div class="submit-btn">
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
-
-        {% else %}
-
-        <!-- CONTROL - NO CHATBOT -->
-
-        <form method="POST" action="/pre-survey">
-
+            <!--<form method="POST" action="/pre-survey">-->
             <!-- Open-Ended Question -->
             <div class="open-ended-group">
                 <p><strong>1. Which email provider do you use?</strong></p>
-                <textarea name="email-provider" rows="4" placeholder="Enter your response here..."></textarea>
+                <textarea name="email-provider" rows="4" placeholder="Enter your response here..." required></textarea>
             </div>
 
             <!-- Single Choice Question -->
@@ -151,15 +127,74 @@
                 <p><strong>2. How often do you use your email?</strong></p>
                 <label><input type="radio" name="email-use-frequency" value="daily" required> Daily</label><br>
                 <label><input type="radio" name="email-use-frequency" value="weekly"> Weekly</label><br>
-                <label><input type="radio" name="email-use-frequency" value="monthly"> Monthly</label>
+                <label><input type="radio" name="email-use-frequency" value="monthly"> Monthly</label><br>
+                <label><input type="radio" name="email-use-frequency" value="yearly"> Yearly</label><br>
+                <label><input type="radio" name="email-use-frequency" value="seldom"> Seldom</label><br>
+                <label><input type="radio" name="email-use-frequency" value="not_at_all"> Not at all</label>
+            </div>
+
+            <!-- Single Choice Question -->
+            <div class="single-choice-group">
+                <p><strong>3. Have you ever interacted with ChatGPT?</strong></p>
+                <label><input type="radio" name="GPT-interaction" value="yes" required> yes</label><br>
+                <label><input type="radio" name="GPT-interaction" value="no"> no</label><br>
+                <label><input type="radio" name="GPT-interaction" value="idk"> I am not sure</label>
+            </div>
+
+            <!-- Single Choice Question -->
+            <div class="single-choice-group">
+                <p><strong>4. Have you ever interacted with chatbot in general?</strong></p>
+                <label><input type="radio" name="BOT-interaction" value="yes" required> yes</label><br>
+                <label><input type="radio" name="BOT-interaction" value="no"> no</label><br>
+                <label><input type="radio" name="BOT-interaction" value="idk"> I am not sure</label>
+            </div>
+
+            <!-- Multiple Choice Question -->
+            <div class="multiple-choice-group">
+                <p><strong>5. Email and computer literacy (Select all that apply)</strong></p>
+                <label><input type="checkbox" name="computer-literacy" value="file_attatchment_NO"> I do not feel confident attaching a file to an email</label><br>
+                <label><input type="checkbox" name="computer-literacy" value="identify_sender_YES"> I know how to determine who sent me an email</label><br>
+                <label><input type="checkbox" name="computer-literacy" value="identify_spam_YES"> I am confident in my ability to identify spam emails without assistance</label><br>
+                <label><input type="checkbox" name="computer-literacy" value="identify_spam_WITH_assistance_YES"> Confident to detect spam <i>with</i> assistance</label>
+                <p id="checkbox-error" class="error-message">Please select at least one option.</p>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="submit-btn">
+                <button type="submit">Submit</button>
+            </div>
+
+        {% else %}
+
+        <!-- CONTROL - NO CHATBOT -->
+
+        <!--<form method="POST" action="/pre-survey">-->
+    
+            <!-- Open-Ended Question -->
+            <div class="open-ended-group">
+                <p><strong>1. Which email provider do you use?</strong></p>
+                <textarea name="email-provider" rows="4" placeholder="Enter your response here..."required></textarea>
+            </div>
+
+            <!-- Single Choice Question -->
+            <div class="single-choice-group">
+                <p><strong>2. How often do you use your email?</strong></p>
+                <label><input type="radio" name="email-use-frequency" value="daily" required> Daily</label><br>
+                <label><input type="radio" name="email-use-frequency" value="weekly"> Weekly</label><br>
+                <label><input type="radio" name="email-use-frequency" value="monthly"> Monthly</label><br>
+                <label><input type="radio" name="email-use-frequency" value="yearly"> Yearly</label><br>
+                <label><input type="radio" name="email-use-frequency" value="seldom"> Seldom</label><br>
+                <label><input type="radio" name="email-use-frequency" value="not_at_all"> Not at all</label>
             </div>
 
             <!-- Multiple Choice Question -->
             <div class="multiple-choice-group">
                 <p><strong>3. Email and computer literacy (Select all that apply)</strong></p>
-                <label><input type="checkbox" name="computer-literacy" value="file_attatchment_NO"> I do not feel confident attaching a file to an email</label><br>
+                <label><input type="checkbox" name="computer-literacy" value="file_attatchment_NO" > I do not feel confident attaching a file to an email</label><br>
                 <label><input type="checkbox" name="computer-literacy" value="identify_sender_YES"> I know how to determine who sent me an email</label><br>
-                <label><input type="checkbox" name="computer-literacy" value="identify_spam_YES"> I am confident in my ability to determine whether an email is spam without assistance</label>
+                <label><input type="checkbox" name="computer-literacy" value="identify_spam_YES"> I am confident in my ability to identify spam emails without assistance</label><br>
+                <label><input type="checkbox" name="computer-literacy" value="identify_spam_WITH_assistance_YES"> Confident to detect spam <i>with</i> assistance</label>
+                <p id="checkbox-error" class="error-message">Please select at least one option.</p>
             </div>
 
             <!-- Submit Button -->
