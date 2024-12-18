@@ -93,15 +93,22 @@
         }        
     </style>
 </head>
-    <div class="survey_email">
 
+    <div class="survey_email">
+        
+        <div class="switch_tabs">
+            <button class="btn btn-info" onclick="showTab('survey')">Survey</button>
+            <button class="btn btn-info" onclick="showTab('email')">View Email</button>
+        </div>
+
+        <!--
         <div class="switch_tabs" style="margin: 1em;text-align: center; position:fixed; top:0; left:44%; background-color: #fff;z-index: 10;">
             <button class="btn btn-info" onclick="showTab('survey')">Survey</button>
             <button class="btn btn-info" onclick="showTab('email')">
                 View Email
             </button>
         </div>
-    
+        -->
         <div id="survey_div" class="survey_div" style="margin: 5em;">
             <h1>Post-Survey</h1>
             <!--<form method="POST" action="/survey">-->
@@ -259,6 +266,7 @@
         </div>
 
     </div>
+
 
     <script>
       function showTab(tabId) {

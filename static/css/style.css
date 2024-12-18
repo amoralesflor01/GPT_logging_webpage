@@ -817,3 +817,68 @@ text-align: center;
     font-size: 1.2rem; /* Smaller timer */
   }
 }
+/* Adjustments for small screen heights (e.g., 551px) */
+@media screen and (max-height: 600px) {
+  /* Reduce disclaimer banner height */
+  .disclaimer-banner {
+    font-size: 12px;
+    padding: 5px 10px;
+    line-height: 1.2;
+  }
+
+  /* Adjust chatbot position and size */
+  .chat_window {
+    width: 350px; /* Smaller width */
+    height: 300px; /* Smaller height */
+    bottom: 10px; /* Ensure it doesn’t obstruct content */
+    right: 10px;
+    position: fixed;
+    overflow-y: auto; /* Scroll within chatbot if content exceeds size */
+  }
+
+  /* Adjust Gmail UI content to be scrollable */
+  .gmail-content {
+    margin-left: 180px; /* Ensure sidebar alignment */
+    max-height: calc(100vh - 150px); /* Allow space for other elements */
+    overflow-y: auto; /* Scroll Gmail content */
+  }
+
+  /* Adjust Gmail sidebar */
+  .gmail-sidebar {
+    width: 140px; /* Reduce sidebar width */
+    font-size: 12px; /* Smaller font */
+  }
+
+  /* Reduce button and timer size */
+  #end-session-btn {
+    font-size: 10px;
+    padding: 5px 8px;
+  }
+
+  #timer {
+    font-size: 1.2rem;
+  }
+
+  /* Shrink chatbot header */
+  .top_menu .title {
+    font-size: 14px; /* Reduce header font size */
+  }
+
+  /* Chat message bubble size */
+  .messages .message .text_wrapper {
+    padding: 10px;
+    font-size: 12px;
+  }
+}
+/* BUTTONS ON POST SURVEY */
+.switch_tabs {
+  margin: 0 auto; /* Center horizontally */
+  text-align: center; /* Align buttons centrally */
+  background-color: #fff; /* Match background */
+  padding: 10px 0;
+  position: relative; /* Ensure it remains part of the flow */
+  width: 100%;
+  max-width: 600px; /* Adjust to match the survey_div width */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+  border-radius: 8px; /* Optional rounded corners */
+}
