@@ -28,23 +28,19 @@
     <div
       class="container"
       style="
-        border: 1px solid black;
-        border-radius: 10px;
-        padding: 10px;
-        background-color: #4e919c;
+        padding: 15px;
+        background-color: #edeff2;
         margin: auto;">
       {% if user_id_int % 2 == 1 %}
-      <p style="font-family: Arial; color: white; font-size: 15px">
-        Please read the email provided carefully and use the chatbot to help you 
-        determine if the email is spam or not. This Chatbot will be used for a 
-        research study, the prompts entered will be recorded and analyzed. Do not 
-        enter any information you wish to keep private.
+      <p style="font-family: Arial; color: black; font-size: 15px">
+        <b>Please take a moment to determine if this email is spam, use the chatbot 
+        for assistance. Once complete, please hit the "proceed to survey" button 
+        at the top right of the screen</b>
       </p>
       {% else %}
-      <p style="font-family: Arial; color: white; font-size: 15px">
-        Please read the email provided carefully and determine if the email is spam or
-        not. You may use any resource you wish to achieve this task. Once finished,
-        pelase proceed to the post-survey.
+      <p style="font-family: Arial; color: black; font-size: 15px">
+        <b>Please take a moment to determine if this email is spam. Once complete, 
+        please hit the "proceed to survey" button at the top right of the screen.</b>
       </p>
       {% endif %}
     </div>
@@ -52,7 +48,7 @@
     <div class="session-info">
         <!-- End Session Button -->
         <button id="end-session-btn" class="btn btn-success" onclick="endSession()">
-            Proceed To Survey
+            <b>Proceed To Survey</b>
         </button>
         
         {# Timer #}
@@ -278,7 +274,7 @@
               if (timeRemaining <= 0) {
                   clearInterval(timer);
                   //TODO: Alert doesn't work.
-                  alert("Session expired! You will be logged out.");
+                  //alert("Session expired! You will be logged out.");
                   //TODO: Am pretty sure, this href, makes it that
                   // maybe instead of redirecting to /, /get makes sure python runs before exiting
                   // @Aditya (Rebooting-me)

@@ -882,3 +882,21 @@ text-align: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
   border-radius: 8px; /* Optional rounded corners */
 }
+.switch_tabs .btn {
+  background-color: #4CAF50; /* Green button background */
+  color: #ffffff; /* White text */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Add some padding */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 16px; /* Match survey text size */
+  display: inline-flex; /* Keep buttons inline */
+  gap: 20px; /* Increase the spacing between buttons */
+  justify-content: center; /* Center the buttons */
+  align-items: center; /* Align buttons vertically */
+  margin-bottom: 10px; /* Adjust spacing below the buttons */
+}
+
+.switch_tabs .btn:hover {
+  background-color: #45a049; /* Darker green on hover */
+  color: #ffffff; /* Ensure text remains visible */
+}
