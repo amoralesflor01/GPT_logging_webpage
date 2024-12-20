@@ -168,10 +168,17 @@
         </div>
       </div>
 
+      <!--
       <div class="gmail-body">
         <p>{{ email_content }}</p>
       </div>
+      -->
 
+      <div class="gmail-body">
+        <p>{{ email_content | replace_links }}</p>
+      </div>
+    
+      
       <div class="gmail-reply-options">
         <button class="gmail-reply-btn"><i class="fa fa-reply"></i> Reply</button>
         <button class="gmail-reply-all-btn"><i class="fa fa-reply-all"></i> Reply All</button>
