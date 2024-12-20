@@ -17,6 +17,8 @@ import services.data_service as svc
 from services.create_accounts_in_db import run_create_accounts
 # from apscheduler.schedulers.background import BackgroundScheduler
 from data_classes.survey import SurveyResponse
+import re
+from markupsafe import Markup
 
 
 # Connect with Mongo DB
@@ -219,27 +221,45 @@ def chat(user_input):
 # Function to get a response from the chatbot
 def get_response(userText):
     return chat(userText)
+    
 
 # *********************************************************
+def replace_links_and_click_here(text):
+    """
+    Handles variations of 'Please click here', 'Click here', or 'Here' followed by a link.
+    Only styles the word 'here' as a clickable link and removes the redundant URL.
+    """
+    # Regex to match variations like 'Please click here', 'Click here', or 'Here' followed by a link
+    click_here_pattern = r'(?i)(please click |click |follow this link )?(here)([\s,:;]*)?(http[s]?://[^\s]+)'
 
-import re
-from markupsafe import Markup
+    # Replace "Please click here" variations
+    def here_replacer(match):
+        # Break down the match groups
+        before_here = (match.group(1) or "")  # Optional phrases like "Please click " or "Click "
+        word_here = match.group(2)  # The word "here"
+        whitespace = match.group(3) or ""  # Preserves optional spaces, commas, or colons after "here"
 
-def replace_links(text):
-    # Regex to find both http and https URLs
+        # Style only the word 'here' as a clickable link
+        styled_here = f'<span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="return false;">{word_here}</span>'
+        return f'{before_here}{styled_here}{whitespace}'
+
+    # Apply the regex replacement for "Please click here" variations
+    text = re.sub(click_here_pattern, here_replacer, text)
+
+    # Regex for standalone links
     url_pattern = r'(http[s]?://[^\s]+)'
-    
-    # Replace URLs with clickable but non-functional links
-    replaced_text = re.sub(
+
+    # Replace remaining standalone links with styled, non-functional links
+    text = re.sub(
         url_pattern,
-        r'<a href="#" onclick="return false;" style="color: #0000EE; text-decoration: underline;">\1</a>',
+        r'<a href="#" onclick="return false;" style="color: blue; text-decoration: underline;">\1</a>',
         text
     )
-    return Markup(replaced_text)  # Mark the text as safe HTML
+
+    return Markup(text)  # Mark the text as safe HTML
 
 # Register the filter with Flask
-application.jinja_env.filters['replace_links'] = replace_links
-
+application.jinja_env.filters['replace_links_and_click_here'] = replace_links_and_click_here
 # *********************************************************
 
 

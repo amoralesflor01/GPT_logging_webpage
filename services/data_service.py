@@ -42,13 +42,6 @@ def pickBalancedEmailUuid() -> str:
     return least_used_email
 
 
-# # Global tracker for email assignments
-# email_tracker = {
-#     "used_emails": set(),  # Keep track of emails that have been assigned to valid pairs
-#     "current_email": None,  # Current email being used
-#     "assigned_groups": {"experimental": None, "control": None},  # Track assigned groups
-# }
-
 def create_account_with_email(user_id: str, email_id: str) -> User:
     user = User()
     user.user_id = user_id
@@ -56,44 +49,6 @@ def create_account_with_email(user_id: str, email_id: str) -> User:
     user.email_id = email_id  # Assign the specific email
     user.save()
     return user
-
-
-# def pickRandomEmailUuid() -> str:
-#     global email_tracker
-
-#     # Read and process the emails
-#     df = pd.read_csv("emails/dataset.csv")
-#     # Separate the rows based on classification
-#     class_0 = df[df['Classification'] == 0]
-#     class_1 = df[df['Classification'] == 1]
-
-#     # Calculate the minimum count between the two classes
-#     min_count = min(len(class_0), len(class_1))
-
-#     # Randomly sample 'min_count' entries from both classes to get equal proportions
-#     sample_0 = class_0.sample(n=min_count, random_state=np.random.randint(1000))
-#     sample_1 = class_1.sample(n=min_count, random_state=np.random.randint(1000))
-
-#     # Combine the samples
-#     balanced_sample = pd.concat([sample_0, sample_1])
-#     balanced_sample = balanced_sample.sample(frac=1, random_state=np.random.randint(1000)).reset_index(drop=True)
-
-#     # Log the size of the balanced sample
-#     print(f"Balanced sample size: {len(balanced_sample)}")
-
-#     # Loop until an unused email is found
-#     while True:
-#         random_row = balanced_sample.sample(n=1, random_state=np.random.randint(1000))
-#         random_email = random_row["UniqueID"].values[0]
-
-#         # Log each email selection attempt
-#         print(f"Attempting to use email: {random_email}")
-#         if random_email not in email_tracker["used_emails"]:
-#             email_tracker["current_email"] = random_email
-#             email_tracker["assigned_groups"] = {"experimental": False, "control": False}
-#             print(f"Selected new email: {random_email}")
-#             break
-#     return email_tracker["current_email"]
 
 
 def create_account(user_id: str) -> User:
