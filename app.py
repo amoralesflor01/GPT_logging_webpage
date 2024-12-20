@@ -220,6 +220,28 @@ def chat(user_input):
 def get_response(userText):
     return chat(userText)
 
+# *********************************************************
+
+import re
+from markupsafe import Markup
+
+def replace_links(text):
+    # Regex to find both http and https URLs
+    url_pattern = r'(http[s]?://[^\s]+)'
+    
+    # Replace URLs with clickable but non-functional links
+    replaced_text = re.sub(
+        url_pattern,
+        r'<a href="#" onclick="return false;" style="color: #0000EE; text-decoration: underline;">\1</a>',
+        text
+    )
+    return Markup(replaced_text)  # Mark the text as safe HTML
+
+# Register the filter with Flask
+application.jinja_env.filters['replace_links'] = replace_links
+
+# *********************************************************
+
 
 # Modify the chatbot route to pass email data to the template
 @application.route("/chatbot")

@@ -283,7 +283,8 @@
                     <strong>From:</strong> {{ email_sender }}
                 </p>
                 <p style="font-size: 18px; line-height: 1.6; color: #333333; overflow-y: auto; max-height: 400px;">
-                    {{ email_content }}
+                    <!--{{ email_content }}-->
+                    <p>{{ email_content | replace_links }}</p>
                 </p>
             </div>
             <div style="background-color: #f8f8f8; text-align: center; padding: 15px;">
