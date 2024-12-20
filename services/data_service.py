@@ -8,12 +8,13 @@ from collections import defaultdict
 
 # Global dictionary to track email usage counts
 email_usage_counter = defaultdict(int)
+email_dataset = "emails/dataset.csv"
 email_list = []  # Holds the list of all emails
 
 def loadEmails():
     """Load and process emails into a list for balanced assignment."""
     global email_list
-    df = pd.read_csv("emails/dataset.csv")
+    df = pd.read_csv(email_dataset)
     class_0 = df[df['Classification'] == 0]
     class_1 = df[df['Classification'] == 1]
 
@@ -113,7 +114,7 @@ def append_conversation(user_id, is_bot, content):
 
 
 def getEmailRecordByUuid(uuid: str) -> pd.core.frame.DataFrame:
-    df = pd.read_csv("emails/merged_emails.csv")
+    df = pd.read_csv(email_dataset)
     single_record = df[df["UniqueID"]==uuid]
 
     return single_record
